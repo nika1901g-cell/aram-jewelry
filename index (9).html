@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A.RAM — Ювелирные изделия</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold2:#E8C97A;--gold3:#8B6914;
+  --black:#0A0A0A;--dark:#111;--dark2:#181818;--dark3:#222;
+  --white:#FAFAF8;--gray:#888;--gray2:#555;
+  --border:rgba(201,168,76,0.2);--border2:rgba(255,255,255,0.08);
+}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;overflow-x:hidden}
+a{text-decoration:none;color:inherit;cursor:pointer}
+
+/* ===== TOP BAR ===== */
+.topbar{background:var(--dark2);border-bottom:1px solid var(--border2);padding:7px 40px;display:flex;align-items:center;justify-content:space-between}
+.topbar-left,.topbar-right{display:flex;gap:20px;align-items:center}
+.tb-link{font-size:11px;color:var(--gray);letter-spacing:.3px;transition:color .2s;cursor:pointer}
+.tb-link:hover{color:var(--gold)}
+.tb-sep{width:1px;height:12px;background:var(--border2)}
+.tb-phone{font-size:11px;color:var(--gold);font-weight:500}
+.tb-city{font-size:11px;color:var(--gray);display:flex;align-items:center;gap:4px;cursor:pointer}
+.tb-city:hover{color:var(--gold)}
+
+/* ===== PROMO BAR ===== */
+.promo-bar{background:var(--gold);padding:8px 40px;text-align:center;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--black)}
+
+/* ===== HEADER ===== */
+header{background:rgba(10,10,10,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+.header-main{padding:0 40px;height:68px;display:flex;align-items:center;gap:20px}
+.logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;letter-spacing:5px;flex-shrink:0;cursor:pointer}
+.logo span{color:var(--gold)}
+.search-wrap{flex:1;max-width:500px;position:relative;margin:0 12px}
+.search-input{width:100%;padding:10px 16px 10px 42px;background:var(--dark3);border:1px solid var(--border2);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color .2s}
+.search-input::placeholder{color:var(--gray)}
+.search-input:focus{border-color:var(--gold)}
+.search-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gray);pointer-events:none}
+.search-ico svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
+.h-icons{display:flex;align-items:center;gap:2px;margin-left:auto}
+.h-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;cursor:pointer;color:rgba(255,255,255,.6);transition:color .2s;background:none;border:none;font-family:'Inter',sans-serif;position:relative}
+.h-btn:hover{color:var(--gold)}
+.h-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5}
+.h-btn span{font-size:9px;letter-spacing:.5px;text-transform:uppercase}
+.cart-badge{position:absolute;top:4px;right:8px;width:17px;height:17px;background:var(--gold);color:var(--black);font-size:9px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* ===== MEGA MENU NAV ===== */
+nav{background:var(--dark2);border-bottom:1px solid var(--border);position:relative;z-index:150}
+.nav-inner{padding:0 40px;display:flex;align-items:center}
+.nav-item{position:static}
+.nav-link{display:flex;align-items:center;gap:4px;padding:14px 16px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.65);transition:color .2s;font-weight:500;white-space:nowrap;cursor:pointer;position:relative}
+.nav-link:hover,.nav-item:hover .nav-link{color:var(--gold)}
+.nav-link.sale-link{color:var(--gold)}
+.nav-link::after{content:'';position:absolute;bottom:0;left:16px;right:16px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .25s}
+.nav-item:hover .nav-link::after{transform:scaleX(1)}
+.nav-chevron{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;transition:transform .25s}
+.nav-item:hover .nav-chevron{transform:rotate(180deg)}
+
+/* MEGA MENU */
+.mega{display:none;position:absolute;top:100%;left:0;right:0;background:var(--dark2);border-bottom:1px solid var(--border);border-top:1px solid var(--border);z-index:300;padding:36px 40px}
+.nav-item:hover .mega{display:block}
+.mega-inner{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;max-width:1200px}
+.mega-col-title{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:600}
+.mega-links{display:flex;flex-direction:column;gap:0}
+.mega-link{padding:9px 0;font-size:13px;color:rgba(255,255,255,.6);border-bottom:1px solid var(--border2);transition:all .2s;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.mega-link:hover{color:var(--white);padding-left:6px}
+.mega-link-count{font-size:10px;color:var(--gray)}
+.mega-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mega-card{background:var(--dark3);border:1px solid var(--border2);padding:16px;cursor:pointer;transition:border-color .2s;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.mega-card:hover{border-color:var(--gold)}
+.mega-card-icon{font-size:28px;opacity:.7}
+.mega-card-name{font-size:11px;font-weight:500;letter-spacing:.5px}
+.mega-card-cnt{font-size:10px;color:var(--gray)}
+.mega-promo{background:linear-gradient(135deg,#1a1208,#0d0a04);border:1px solid var(--border);padding:24px;position:relative;overflow:hidden;cursor:pointer}
+.mega-promo-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.mega-promo-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:8px;line-height:1.1}
+.mega-promo-sub{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:16px}
+.mega-promo-btn{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--gold);padding-bottom:2px;display:inline-block}
+.mega-promo-deco{position:absolute;right:-10px;bottom:-20px;font-size:80px;opacity:.04}
+
+/* ===== HERO SLIDER ===== */
+.hero{position:relative;height:580px;overflow:hidden}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+.hero-slide.active{opacity:1}
+.slide-bg{position:absolute;inset:0}
+.slide-pattern{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23C9A84C'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E")}
+.slide-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(ellipse,rgba(201,168,76,.09) 0%,transparent 70%);top:50%;right:5%;transform:translateY(-50%);pointer-events:none}
+.slide-content{position:absolute;left:10%;top:50%;transform:translateY(-50%);max-width:520px}
+.slide-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:0;animation:none}
+.hero-slide.active .slide-tag{animation:fadeUp .7s ease .1s forwards}
+.hero-slide.active .slide-title{animation:fadeUp .7s ease .25s forwards}
+.hero-slide.active .slide-sub{animation:fadeUp .7s ease .4s forwards}
+.hero-slide.active .slide-btns{animation:fadeUp .7s ease .55s forwards}
+.slide-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,7vw,88px);font-weight:300;line-height:.92;margin-bottom:20px;opacity:0}
+.slide-title em{font-style:italic;color:var(--gold)}
+.slide-sub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:36px;line-height:1.7;max-width:400px;opacity:0}
+.slide-btns{display:flex;gap:12px;opacity:0}
+.btn-gold{padding:14px 38px;background:var(--gold);color:var(--black);font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s}
+.btn-gold:hover{background:var(--gold2)}
+.btn-ghost{padding:14px 38px;background:transparent;color:var(--white);font-family:'Inter',sans-serif;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,255,255,.25);cursor:pointer;transition:all .3s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.slider-dots{position:absolute;bottom:28px;left:10%;display:flex;gap:8px}
+.sdot{width:28px;height:2px;background:rgba(255,255,255,.2);cursor:pointer;transition:all .35s}
+.sdot.active{background:var(--gold);width:48px}
+.slider-arr{position:absolute;right:40px;bottom:24px;display:flex;gap:8px}
+.sarr{width:44px;height:44px;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;background:transparent;color:rgba(255,255,255,.6)}
+.sarr:hover{border-color:var(--gold);color:var(--gold)}
+.sarr svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== CATEGORIES ===== */
+.cats{padding:32px 40px;background:var(--dark)}
+.cats-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:18px}
+.cats-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.cat-item{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 8px;background:var(--dark2);border:1px solid var(--border2);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.cat-item::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .25s}
+.cat-item:hover{border-color:var(--border);background:var(--dark3)}
+.cat-item:hover::after{transform:scaleX(1)}
+.cat-icon{font-size:24px}
+.cat-name{font-size:11px;font-weight:500;text-align:center;color:rgba(255,255,255,.75)}
+.cat-cnt{font-size:10px;color:var(--gray)}
+
+/* ===== MARQUEE ===== */
+.marquee{padding:13px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--dark2);overflow:hidden}
+.mq-track{display:flex;gap:48px;animation:mq 28s linear infinite;white-space:nowrap}
+.mq-item{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.mq-dot{width:3px;height:3px;background:var(--gold);border-radius:50%;flex-shrink:0}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===== PROMO BANNER GRID ===== */
+.promo-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:260px 260px;gap:2px}
+.pg-card{position:relative;overflow:hidden;cursor:pointer;background:var(--dark2)}
+.pg-card.big{grid-row:span 2}
+.pg-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.pg-emoji{font-size:120px;opacity:.04;transition:transform .5s}
+.pg-card:hover .pg-emoji{transform:scale(1.1)}
+.pg-ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.1) 55%,transparent 100%);transition:opacity .3s}
+.pg-card:hover .pg-ovl{opacity:.7}
+.pg-body{position:absolute;bottom:0;left:0;right:0;padding:24px}
+.pg-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.pg-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:5px;line-height:1.15}
+.big .pg-name{font-size:40px}
+.pg-cnt{font-size:11px;color:rgba(255,255,255,.4)}
+.pg-arr{position:absolute;top:18px;right:18px;width:34px;height:34px;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s}
+.pg-card:hover .pg-arr{opacity:1}
+.pg-arr svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2}
+
+/* ===== PRODUCTS ===== */
+.section{padding:60px 40px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px}
+.sec-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,48px);font-weight:300;line-height:1}
+.sec-more{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);border-bottom:1px solid rgba(255,255,255,.15);padding-bottom:3px;cursor:pointer;transition:all .2s}
+.sec-more:hover{color:var(--gold);border-color:var(--gold)}
+.prod-tabs{display:flex;border-bottom:1px solid var(--border2);margin-bottom:24px}
+.ptab{padding:10px 20px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;margin-bottom:-1px}
+.ptab.active,.ptab:hover{color:var(--gold);border-color:var(--gold)}
+.prods{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.pcard{cursor:pointer}
+.pcard-img{position:relative;background:var(--dark2);aspect-ratio:3/4;overflow:hidden;margin-bottom:12px}
+.pcard-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:60px;opacity:.06;transition:transform .5s}
+.pcard:hover .pcard-inner{transform:scale(1.07)}
+.pbadge{position:absolute;top:10px;left:10px;padding:4px 10px;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;z-index:2}
+.b-new{background:var(--gold);color:var(--black)}
+.b-sale{background:#8B0000;color:#fff}
+.b-hit{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.pwish{position:absolute;top:10px;right:10px;width:32px;height:32px;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;cursor:pointer;border:none}
+.pcard:hover .pwish{opacity:1}
+.pwish svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:1.5}
+.pquick{position:absolute;bottom:0;left:0;right:0;padding:10px;background:rgba(0,0,0,.88);transform:translateY(100%);transition:transform .25s}
+.pcard:hover .pquick{transform:translateY(0)}
+.pquick-btn{width:100%;padding:10px;background:var(--gold);color:var(--black);border:none;font-family:'Inter',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+.pquick-btn:hover{background:var(--gold2)}
+.pstars{font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px}
+.pname{font-size:13px;margin-bottom:4px;line-height:1.3}
+.pmat{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
+.pprice-row{display:flex;align-items:center;gap:10px}
+.pprice{font-size:14px;font-weight:600;color:var(--gold)}
+.pold{font-size:12px;color:rgba(255,255,255,.28);text-decoration:line-through}
+
+/* ===== SALE BANNER ===== */
+.sale-strip{margin:0 40px;padding:36px 60px;background:linear-gradient(110deg,#1a1208,#0d0a04);border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;cursor:pointer}
+.sale-deco{position:absolute;right:0;top:0;bottom:0;width:35%;display:flex;align-items:center;justify-content:flex-end;padding-right:60px;font-size:200px;opacity:.03;pointer-events:none}
+.sale-tag{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.sale-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;margin-bottom:8px}
+.sale-sub{font-size:13px;color:rgba(255,255,255,.45)}
+.sale-pct{font-family:'Cormorant Garamond',serif;font-size:88px;font-weight:300;color:var(--gold);line-height:1}
+.sale-pct sup{font-size:36px;vertical-align:super}
+
+/* ===== ADVANTAGES ===== */
+.adv{padding:44px 40px;background:var(--dark2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.adv-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.adv-item{padding:24px 28px;border-right:1px solid var(--border);display:flex;align-items:flex-start;gap:14px}
+.adv-item:last-child{border:none}
+.adv-ico{width:44px;height:44px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.adv-ico svg{width:20px;height:20px;fill:none;stroke:var(--gold);stroke-width:1.5}
+.adv-t{font-size:13px;font-weight:600;margin-bottom:5px}
+.adv-s{font-size:11px;color:var(--gray);line-height:1.6}
+
+/* ===== RING SIZE ===== */
+.size-section{padding:60px 40px;background:var(--dark)}
+.size-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.size-visual{position:relative}
+.size-ruler{background:var(--dark2);border:1px solid var(--border);padding:32px;display:flex;flex-direction:column;gap:0}
+.size-ruler-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;text-align:center}
+.size-table{width:100%;border-collapse:collapse}
+.size-table th{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);padding:8px 12px;border-bottom:1px solid var(--border2);text-align:left}
+.size-table td{font-size:12px;color:rgba(255,255,255,.7);padding:10px 12px;border-bottom:1px solid var(--border2)}
+.size-table tr:hover td{background:var(--dark3);color:var(--white)}
+.size-highlight{color:var(--gold)!important;font-weight:600}
+.size-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.size-h{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;line-height:1.1;margin-bottom:16px}
+.size-h em{font-style:italic;color:var(--gold)}
+.size-text{font-size:13px;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:24px}
+.size-steps{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.size-step{display:flex;align-items:flex-start;gap:12px}
+.step-num{width:24px;height:24px;border:1px solid var(--gold);color:var(--gold);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-text{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
+
+/* ===== COLLECTIONS ===== */
+.colls{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.coll-card{position:relative;aspect-ratio:3/4;background:var(--dark2);overflow:hidden;cursor:pointer}
+.coll-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.04;transition:transform .6s}
+.coll-card:hover .coll-inner{transform:scale(1.08)}
+.coll-ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 55%)}
+.coll-body{position:absolute;bottom:0;left:0;right:0;padding:28px}
+.coll-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.coll-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;margin-bottom:6px}
+.coll-sub{font-size:11px;color:rgba(255,255,255,.4)}
+.coll-btn{display:inline-block;margin-top:14px;padding:8px 20px;border:1px solid rgba(255,255,255,.2);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.65);transition:all .25s}
+.coll-card:hover .coll-btn{border-color:var(--gold);color:var(--gold)}
+
+/* ===== MAP ===== */
+.map-section{padding:60px 40px;background:var(--dark2)}
+.map-inner{display:grid;grid-template-columns:1fr 2fr;gap:40px;align-items:start}
+.map-list{display:flex;flex-direction:column;gap:0}
+.map-item{padding:16px 0;border-bottom:1px solid var(--border2);cursor:pointer;transition:all .2s}
+.map-item.active,.map-item:hover{padding-left:8px}
+.map-item.active .map-city{color:var(--gold)}
+.map-city{font-size:14px;font-weight:500;margin-bottom:4px;transition:color .2s}
+.map-addr{font-size:11px;color:var(--gray);margin-bottom:3px}
+.map-hours{font-size:11px;color:rgba(255,255,255,.35)}
+.map-phone-sm{font-size:11px;color:var(--gold);margin-top:4px}
+.map-visual{background:var(--dark3);border:1px solid var(--border);aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative;overflow:hidden}
+.map-grid{position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(0deg,transparent,transparent 30px,rgba(201,168,76,1) 30px,rgba(201,168,76,1) 31px),repeating-linear-gradient(90deg,transparent,transparent 30px,rgba(201,168,76,1) 30px,rgba(201,168,76,1) 31px)}
+.map-pin{font-size:48px;opacity:.2}
+.map-note{font-size:13px;color:rgba(255,255,255,.35);letter-spacing:1px}
+.map-note-sub{font-size:11px;color:var(--gray)}
+
+/* ===== APP SECTION ===== */
+.app-sec{padding:60px 40px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.app-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.app-h{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.1;margin-bottom:14px}
+.app-h em{font-style:italic;color:var(--gold)}
+.app-txt{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:28px;line-height:1.7}
+.app-btns{display:flex;gap:12px;margin-bottom:28px}
+.store-btn{display:flex;align-items:center;gap:10px;padding:12px 20px;border:1px solid var(--border);cursor:pointer;transition:border-color .25s}
+.store-btn:hover{border-color:var(--gold)}
+.store-icon{font-size:22px}
+.store-txt span{display:block;font-size:9px;color:var(--gray);letter-spacing:.5px}
+.store-txt strong{font-size:13px;font-weight:500}
+.app-feats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.app-feat{display:flex;align-items:flex-start;gap:10px}
+.feat-dot{width:6px;height:6px;background:var(--gold);flex-shrink:0;margin-top:5px}
+.feat-txt{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5}
+.phones{display:flex;justify-content:center;gap:16px}
+.phone{width:155px;background:var(--dark3);border:1px solid var(--border);padding:10px}
+.phone:nth-child(2){transform:translateY(28px)}
+.phone-screen{width:100%;aspect-ratio:9/16;background:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.ps-ico{font-size:36px;opacity:.08}
+.ps-logo{font-family:'Cormorant Garamond',serif;font-size:16px;letter-spacing:3px;color:var(--gold)}
+.ps-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2)}
+
+/* ===== REVIEWS ===== */
+.revs{padding:60px 40px;background:var(--dark2)}
+.revs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.rev{background:var(--dark3);border:1px solid var(--border2);padding:28px;transition:border-color .25s}
+.rev:hover{border-color:var(--border)}
+.rev-stars{color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:14px}
+.rev-txt{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:300;font-style:italic;line-height:1.7;color:rgba(255,255,255,.75);margin-bottom:18px}
+.rev-foot{display:flex;align-items:center;justify-content:space-between}
+.rev-name{font-size:11px;font-weight:600;color:rgba(255,255,255,.65)}
+.rev-city{font-size:10px;color:var(--gray)}
+.rev-date{font-size:10px;color:var(--gray)}
+
+/* ===== NEWSLETTER ===== */
+.nl{padding:50px 40px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;border-top:1px solid var(--border)}
+.nl-h{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;margin-bottom:10px}
+.nl-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.6}
+.nl-form{display:flex}
+.nl-inp{flex:1;padding:14px 18px;background:var(--dark2);border:1px solid var(--border);border-right:none;color:var(--white);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color .2s}
+.nl-inp::placeholder{color:rgba(255,255,255,.22)}
+.nl-inp:focus{border-color:var(--gold)}
+.nl-btn{padding:14px 28px;background:var(--gold);color:var(--black);border:none;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .3s;white-space:nowrap}
+.nl-btn:hover{background:var(--gold2)}
+.nl-note{font-size:10px;color:rgba(255,255,255,.2);margin-top:10px;line-height:1.5}
+
+/* ===== FOOTER ===== */
+footer{background:var(--black);border-top:1px solid var(--border)}
+.foot-main{padding:60px 40px 40px;display:grid;grid-template-columns:2.2fr 1fr 1fr 1.5fr;gap:48px}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;letter-spacing:5px;margin-bottom:14px}
+.f-logo span{color:var(--gold)}
+.f-desc{font-size:12px;line-height:1.8;color:rgba(255,255,255,.3);max-width:240px;margin-bottom:22px}
+.f-socs{display:flex;gap:8px}
+.fsoc{width:36px;height:36px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:rgba(255,255,255,.35);cursor:pointer;transition:all .25s;letter-spacing:0}
+.fsoc:hover{border-color:var(--gold);color:var(--gold)}
+.f-head{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:600}
+.f-links{display:flex;flex-direction:column;gap:9px}
+.f-lnk{font-size:12px;color:rgba(255,255,255,.38);transition:all .2s;cursor:pointer}
+.f-lnk:hover{color:var(--gold);padding-left:4px}
+.f-contacts{display:flex;flex-direction:column;gap:14px}
+.fci span:first-child{display:block;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:2px}
+.fci span:last-child{font-size:12px;color:rgba(255,255,255,.55)}
+.fci .phone{color:var(--gold);font-weight:500;font-size:14px}
+.foot-bot{padding:18px 40px;border-top:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center}
+.f-copy{font-size:11px;color:rgba(255,255,255,.18);letter-spacing:.3px}
+.f-bot-links{display:flex;gap:24px}
+.f-blnk{font-size:11px;color:rgba(255,255,255,.22);cursor:pointer;transition:color .2s}
+.f-blnk:hover{color:var(--gold)}
+.pay-icons{display:flex;gap:8px}
+.pay{padding:4px 10px;border:1px solid var(--border2);font-size:10px;color:rgba(255,255,255,.25);font-weight:700;letter-spacing:.3px}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="tb-city">📍 Ереван</div>
+    <div class="tb-sep"></div>
+    <span class="tb-link">Магазины</span>
+    <span class="tb-link">Сертификаты</span>
+    <span class="tb-link">Бонусная программа</span>
+    <span class="tb-link">Журнал</span>
+  </div>
+  <div class="topbar-right">
+    <span class="tb-phone">8 800 100 00 00</span>
+    <div class="tb-sep"></div>
+    <span class="tb-link">RU</span>
+    <span class="tb-link">EN</span>
+  </div>
+</div>
+
+<!-- PROMO BAR -->
+<div class="promo-bar">✦ &nbsp;Бесплатная доставка при заказе от 5 000 ₽ &nbsp;✦ &nbsp;Обмен и возврат 14 дней &nbsp;✦ &nbsp;Сертификат качества на каждое изделие &nbsp;✦</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-main">
+    <div class="logo">A<span>.</span>RAM</div>
+    <div class="search-wrap">
+      <span class="search-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input class="search-input" type="text" placeholder="Поиск: кольца, серьги, колье, браслеты...">
+    </div>
+    <div class="h-icons">
+      <button class="h-btn" onclick="location.href='account.html'">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Войти</span>
+      </button>
+      <button class="h-btn">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        <span>Избранное</span>
+      </button>
+      <button class="h-btn" onclick="location.href='cart.html'">
+        <div class="cart-badge" id="cartCount">3</div>
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Корзина</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV WITH MEGA MENU -->
+<nav>
+  <div class="nav-inner">
+
+    <!-- УКРАШЕНИЯ -->
+    <div class="nav-item">
+      <div class="nav-link">Украшения <svg class="nav-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="mega">
+        <div class="mega-inner">
+          <div>
+            <p class="mega-col-title">Все категории</p>
+            <div class="mega-cards">
+              <div class="mega-card" onclick="location.href='catalog.html'"><div class="mega-card-icon">💍</div><div class="mega-card-name">Кольца</div><div class="mega-card-cnt">480+</div></div>
+              <div class="mega-card" onclick="location.href='catalog.html'"><div class="mega-card-icon">✨</div><div class="mega-card-name">Серьги</div><div class="mega-card-cnt">620+</div></div>
+              <div class="mega-card" onclick="location.href='catalog.html'"><div class="mega-card-icon">📿</div><div class="mega-card-name">Колье</div><div class="mega-card-cnt">340+</div></div>
+              <div class="mega-card" onclick="location.href='catalog.html'"><div class="mega-card-icon">🪢</div><div class="mega-card-name">Браслеты</div><div class="mega-card-cnt">290+</div></div>
+              <div class="mega-card" onclick="location.href='catalog.html'"><div class="mega-card-icon">🔮</div><div class="mega-card-name">Подвески</div><div class="mega-card-cnt">210+</div></div>
+              <div class="mega-card" onclick="location.href='catalog.html'"><div class="mega-card-icon">👑</div><div class="mega-card-name">Броши</div><div class="mega-card-cnt">95+</div></div>
+            </div>
+          </div>
+          <div>
+            <p class="mega-col-title">По металлу</p>
+            <div class="mega-links">
+              <div class="mega-link">Золото 585 пробы<span class="mega-link-count">380</span></div>
+              <div class="mega-link">Золото 750 пробы<span class="mega-link-count">120</span></div>
+              <div class="mega-link">Серебро 925<span class="mega-link-count">540</span></div>
+              <div class="mega-link">Платина<span class="mega-link-count">45</span></div>
+              <div class="mega-link">Комбинированное<span class="mega-link-count">88</span></div>
+            </div>
+          </div>
+          <div>
+            <p class="mega-col-title">По камню</p>
+            <div class="mega-links">
+              <div class="mega-link">Бриллианты<span class="mega-link-count">210</span></div>
+              <div class="mega-link">Рубины<span class="mega-link-count">95</span></div>
+              <div class="mega-link">Сапфиры<span class="mega-link-count">78</span></div>
+              <div class="mega-link">Изумруды<span class="mega-link-count">62</span></div>
+              <div class="mega-link">Жемчуг<span class="mega-link-count">110</span></div>
+              <div class="mega-link">Без камней<span class="mega-link-count">340</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="mega-promo">
+              <p class="mega-promo-tag">Новая коллекция</p>
+              <h3 class="mega-promo-title">Eternal<br>Gold 2025</h3>
+              <p class="mega-promo-sub">38 эксклюзивных украшений из золота 585 пробы</p>
+              <span class="mega-promo-btn">Смотреть →</span>
+              <div class="mega-promo-deco">💍</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- БИЖУТЕРИЯ -->
+    <div class="nav-item">
+      <div class="nav-link">Бижутерия <svg class="nav-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="mega">
+        <div class="mega-inner">
+          <div>
+            <p class="mega-col-title">Категории бижутерии</p>
+            <div class="mega-cards">
+              <div class="mega-card"><div class="mega-card-icon">💍</div><div class="mega-card-name">Кольца</div><div class="mega-card-cnt">180+</div></div>
+              <div class="mega-card"><div class="mega-card-icon">✨</div><div class="mega-card-name">Серьги</div><div class="mega-card-cnt">240+</div></div>
+              <div class="mega-card"><div class="mega-card-icon">📿</div><div class="mega-card-name">Колье</div><div class="mega-card-cnt">120+</div></div>
+              <div class="mega-card"><div class="mega-card-icon">🪢</div><div class="mega-card-name">Браслеты</div><div class="mega-card-cnt">95+</div></div>
+            </div>
+          </div>
+          <div>
+            <p class="mega-col-title">По материалу</p>
+            <div class="mega-links">
+              <div class="mega-link">Позолоченное серебро</div>
+              <div class="mega-link">Нержавеющая сталь</div>
+              <div class="mega-link">С кристаллами</div>
+              <div class="mega-link">С эмалью</div>
+              <div class="mega-link">Жемчуг</div>
+            </div>
+          </div>
+          <div>
+            <p class="mega-col-title">По стилю</p>
+            <div class="mega-links">
+              <div class="mega-link">Классика</div>
+              <div class="mega-link">Минимализм</div>
+              <div class="mega-link">Бохо</div>
+              <div class="mega-link">Винтаж</div>
+              <div class="mega-link">Авангард</div>
+            </div>
+          </div>
+          <div>
+            <div class="mega-promo" style="background:linear-gradient(135deg,#0f0d18,#08080d)">
+              <p class="mega-promo-tag">Лимитированная серия</p>
+              <h3 class="mega-promo-title">Bijoux<br>Premium</h3>
+              <p class="mega-promo-sub">56 изделий премиального качества</p>
+              <span class="mega-promo-btn">Смотреть →</span>
+              <div class="mega-promo-deco">💎</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-item"><div class="nav-link" onclick="location.href='catalog.html'">Коллекции</div></div>
+    <div class="nav-item"><div class="nav-link" onclick="location.href='catalog.html'">Новинки</div></div>
+    <div class="nav-item"><div class="nav-link sale-link" onclick="location.href='catalog.html'">Акции 🔥</div></div>
+    <div class="nav-item"><div class="nav-link">Подарки</div></div>
+    <div class="nav-item"><div class="nav-link">О бренде</div></div>
+    <div class="nav-item" style="margin-left:auto"><div class="nav-link" style="font-size:11px;opacity:.5">Журнал</div></div>
+  </div>
+</nav>
+
+<!-- HERO SLIDER -->
+<section class="hero">
+  <div class="hero-slide active" style="background:linear-gradient(110deg,#0d0a04 0%,#1a1208 45%,#0d0a04 100%)">
+    <div class="slide-pattern"></div>
+    <div class="slide-glow"></div>
+    <div class="slide-content">
+      <p class="slide-tag">Новая коллекция · Весна 2025</p>
+      <h1 class="slide-title">Eternal<br><em>Gold</em></h1>
+      <p class="slide-sub">Украшения из золота 585 пробы с натуральными бриллиантами. Каждое изделие создано вручную мастерами A.RAM</p>
+      <div class="slide-btns">
+        <button class="btn-gold" onclick="location.href='catalog.html'">Смотреть коллекцию</button>
+        <button class="btn-ghost" onclick="location.href='catalog.html'">Все украшения</button>
+      </div>
+    </div>
+  </div>
+  <div class="hero-slide" style="background:linear-gradient(110deg,#08080d 0%,#0f0d18 45%,#08080d 100%)">
+    <div class="slide-glow" style="background:radial-gradient(ellipse,rgba(140,100,220,.08) 0%,transparent 70%)"></div>
+    <div class="slide-content">
+      <p class="slide-tag">Лимитированная серия</p>
+      <h1 class="slide-title">Crystal<br><em>Nights</em></h1>
+      <p class="slide-sub">Серебро 925 пробы с кристаллами и сапфирами. Ночная элегантность для особых моментов</p>
+      <div class="slide-btns">
+        <button class="btn-gold" onclick="location.href='catalog.html'">Открыть коллекцию</button>
+        <button class="btn-ghost">Узнать больше</button>
+      </div>
+    </div>
+  </div>
+  <div class="hero-slide" style="background:linear-gradient(110deg,#080d08 0%,#0d1a0d 45%,#080d08 100%)">
+    <div class="slide-glow" style="background:radial-gradient(ellipse,rgba(60,160,100,.06) 0%,transparent 70%)"></div>
+    <div class="slide-content">
+      <p class="slide-tag">Специальное предложение</p>
+      <h1 class="slide-title">Распродажа<br><em>до −40%</em></h1>
+      <p class="slide-sub">Украшения из предыдущих коллекций по специальным ценам. Только до конца месяца</p>
+      <div class="slide-btns">
+        <button class="btn-gold" onclick="location.href='catalog.html'">К распродаже</button>
+        <button class="btn-ghost">Все акции</button>
+      </div>
+    </div>
+  </div>
+  <div class="slider-dots" id="sdots">
+    <div class="sdot active" onclick="goSlide(0)"></div>
+    <div class="sdot" onclick="goSlide(1)"></div>
+    <div class="sdot" onclick="goSlide(2)"></div>
+  </div>
+  <div class="slider-arr">
+    <button class="sarr" onclick="prevSlide()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <button class="sarr" onclick="nextSlide()"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<div class="cats">
+  <p class="cats-label">Категории украшений</p>
+  <div class="cats-grid">
+    <div class="cat-item" onclick="location.href='catalog.html'"><div class="cat-icon">💍</div><div class="cat-name">Кольца</div><div class="cat-cnt">480+</div></div>
+    <div class="cat-item" onclick="location.href='catalog.html'"><div class="cat-icon">✨</div><div class="cat-name">Серьги</div><div class="cat-cnt">620+</div></div>
+    <div class="cat-item" onclick="location.href='catalog.html'"><div class="cat-icon">📿</div><div class="cat-name">Колье</div><div class="cat-cnt">340+</div></div>
+    <div class="cat-item" onclick="location.href='catalog.html'"><div class="cat-icon">🪢</div><div class="cat-name">Браслеты</div><div class="cat-cnt">290+</div></div>
+    <div class="cat-item" onclick="location.href='catalog.html'"><div class="cat-icon">🔮</div><div class="cat-name">Подвески</div><div class="cat-cnt">210+</div></div>
+    <div class="cat-item" onclick="location.href='catalog.html'"><div class="cat-icon">👑</div><div class="cat-name">Броши</div><div class="cat-cnt">95+</div></div>
+    <div class="cat-item" onclick="location.href='catalog.html'"><div class="cat-icon">💎</div><div class="cat-name">Бижутерия</div><div class="cat-cnt">560+</div></div>
+    <div class="cat-item"><div class="cat-icon">🎁</div><div class="cat-name">Подарки</div><div class="cat-cnt">180+</div></div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="mq-track">
+    <span class="mq-item"><span class="mq-dot"></span>Золото 585 пробы</span>
+    <span class="mq-item"><span class="mq-dot"></span>Серебро 925 пробы</span>
+    <span class="mq-item"><span class="mq-dot"></span>Сертифицированные бриллианты</span>
+    <span class="mq-item"><span class="mq-dot"></span>Ручная работа</span>
+    <span class="mq-item"><span class="mq-dot"></span>Авторский дизайн</span>
+    <span class="mq-item"><span class="mq-dot"></span>Гарантия 1 год</span>
+    <span class="mq-item"><span class="mq-dot"></span>Доставка по СНГ</span>
+    <span class="mq-item"><span class="mq-dot"></span>Бесплатная примерка</span>
+    <span class="mq-item"><span class="mq-dot"></span>Золото 585 пробы</span>
+    <span class="mq-item"><span class="mq-dot"></span>Серебро 925 пробы</span>
+    <span class="mq-item"><span class="mq-dot"></span>Сертифицированные бриллианты</span>
+    <span class="mq-item"><span class="mq-dot"></span>Ручная работа</span>
+    <span class="mq-item"><span class="mq-dot"></span>Авторский дизайн</span>
+    <span class="mq-item"><span class="mq-dot"></span>Гарантия 1 год</span>
+    <span class="mq-item"><span class="mq-dot"></span>Доставка по СНГ</span>
+    <span class="mq-item"><span class="mq-dot"></span>Бесплатная примерка</span>
+  </div>
+</div>
+
+<!-- PROMO BANNER GRID -->
+<div class="promo-grid">
+  <div class="pg-card big" style="background:linear-gradient(135deg,#1a1208,#0d0a04)" onclick="location.href='catalog.html'">
+    <div class="pg-bg"><span class="pg-emoji">💍</span></div>
+    <div class="pg-ovl"></div>
+    <div class="pg-arr"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    <div class="pg-body"><p class="pg-tag">Флагман · 2025</p><h3 class="pg-name">Eternal<br>Gold</h3><p class="pg-cnt">38 украшений · Золото 585</p></div>
+  </div>
+  <div class="pg-card" style="background:linear-gradient(135deg,#0f0d18,#08080d)" onclick="location.href='catalog.html'">
+    <div class="pg-bg"><span class="pg-emoji">💎</span></div>
+    <div class="pg-ovl"></div>
+    <div class="pg-arr"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    <div class="pg-body"><p class="pg-tag">Лимитированная</p><h3 class="pg-name">Crystal Nights</h3><p class="pg-cnt">24 украшения</p></div>
+  </div>
+  <div class="pg-card" style="background:linear-gradient(135deg,#1a0808,#0d0404)" onclick="location.href='catalog.html'">
+    <div class="pg-bg"><span class="pg-emoji">🌹</span></div>
+    <div class="pg-ovl"></div>
+    <div class="pg-arr"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    <div class="pg-body"><p class="pg-tag">Новинка</p><h3 class="pg-name">Rose & Ruby</h3><p class="pg-cnt">19 украшений</p></div>
+  </div>
+  <div class="pg-card" style="background:linear-gradient(135deg,#080d08,#040d04)" onclick="location.href='catalog.html'">
+    <div class="pg-bg"><span class="pg-emoji">✨</span></div>
+    <div class="pg-ovl"></div>
+    <div class="pg-arr"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+    <div class="pg-body"><p class="pg-tag">Бижутерия</p><h3 class="pg-name">Bijoux Premium</h3><p class="pg-cnt">56 изделий</p></div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section" style="background:var(--dark)">
+  <div class="sec-head">
+    <div><p class="sec-label">Каталог</p><h2 class="sec-title">Хиты продаж</h2></div>
+    <a class="sec-more" onclick="location.href='catalog.html'">Смотреть все →</a>
+  </div>
+  <div class="prod-tabs">
+    <div class="ptab active" onclick="setTab(this)">Все</div>
+    <div class="ptab" onclick="setTab(this)">Кольца</div>
+    <div class="ptab" onclick="setTab(this)">Серьги</div>
+    <div class="ptab" onclick="setTab(this)">Колье</div>
+    <div class="ptab" onclick="setTab(this)">Браслеты</div>
+    <div class="ptab" onclick="setTab(this)">Подвески</div>
+  </div>
+  <div class="prods">
+    <div class="pcard" onclick="location.href='product.html'">
+      <div class="pcard-img"><span class="pbadge b-new">Новинка</span><div class="pcard-inner">💍</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addToCart(event)">В корзину</button></div></div>
+      <div class="pstars">★★★★★</div><p class="pname">Кольцо «Аврора»</p><p class="pmat">Золото 585 · Бриллиант</p><div class="pprice-row"><span class="pprice">48 900 ₽</span></div>
+    </div>
+    <div class="pcard" onclick="location.href='product.html'">
+      <div class="pcard-img"><span class="pbadge b-hit">Хит</span><div class="pcard-inner">✨</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addToCart(event)">В корзину</button></div></div>
+      <div class="pstars">★★★★★</div><p class="pname">Серьги «Луна»</p><p class="pmat">Золото 585 · Рубин</p><div class="pprice-row"><span class="pprice">31 600 ₽</span><span class="pold">39 500 ₽</span></div>
+    </div>
+    <div class="pcard" onclick="location.href='product.html'">
+      <div class="pcard-img"><span class="pbadge b-sale">−20%</span><div class="pcard-inner">📿</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addToCart(event)">В корзину</button></div></div>
+      <div class="pstars">★★★★☆</div><p class="pname">Колье «Созвездие»</p><p class="pmat">Серебро 925 · Жемчуг</p><div class="pprice-row"><span class="pprice">22 400 ₽</span><span class="pold">28 000 ₽</span></div>
+    </div>
+    <div class="pcard" onclick="location.href='product.html'">
+      <div class="pcard-img"><div class="pcard-inner">🪢</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addToCart(event)">В корзину</button></div></div>
+      <div class="pstars">★★★★★</div><p class="pname">Браслет «Вечность»</p><p class="pmat">Золото 585 · Сапфир</p><div class="pprice-row"><span class="pprice">67 200 ₽</span></div>
+    </div>
+    <div class="pcard" onclick="location.href='product.html'">
+      <div class="pcard-img"><span class="pbadge b-new">Новинка</span><div class="pcard-inner">🔮</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addToCart(event)">В корзину</button></div></div>
+      <div class="pstars">★★★★★</div><p class="pname">Подвеска «Капля»</p><p class="pmat">Золото 585 · Изумруд</p><div class="pprice-row"><span class="pprice">28 500 ₽</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SALE BANNER -->
+<div class="sale-strip" onclick="location.href='catalog.html'">
+  <div>
+    <p class="sale-tag">Специальное предложение</p>
+    <h3 class="sale-title">Сезонная распродажа</h3>
+    <p class="sale-sub">Украшения из золота и серебра по специальным ценам</p>
+    <button class="btn-gold" style="margin-top:20px">Перейти к акциям</button>
+  </div>
+  <div class="sale-deco">💎</div>
+  <div style="text-align:right">
+    <div class="sale-pct"><sup>до </sup>40<sup>%</sup></div>
+    <p style="font-size:11px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;margin-top:6px">только до конца месяца</p>
+  </div>
+</div>
+
+<!-- ADVANTAGES -->
+<div class="adv">
+  <div class="adv-grid">
+    <div class="adv-item">
+      <div class="adv-ico"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4a2 2 0 012 2v5a2 2 0 01-2 2h-4"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+      <div><p class="adv-t">Бесплатная доставка</p><p class="adv-s">При заказе от 5 000 ₽ — доставка по всему СНГ. Курьер или самовывоз</p></div>
+    </div>
+    <div class="adv-item">
+      <div class="adv-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div><p class="adv-t">Гарантия качества</p><p class="adv-s">Гарантия 1 год на все изделия. Сертификат подлинности на каждое украшение</p></div>
+    </div>
+    <div class="adv-item">
+      <div class="adv-ico"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div>
+      <div><p class="adv-t">Обмен и возврат</p><p class="adv-s">Возврат в течение 14 дней. Примерка перед оплатой в любом нашем магазине</p></div>
+    </div>
+    <div class="adv-item">
+      <div class="adv-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+      <div><p class="adv-t">Бонусная программа</p><p class="adv-s">Копите баллы и получайте скидки до 30% на следующие покупки</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- RING SIZE -->
+<section class="size-section">
+  <div class="sec-head">
+    <div><p class="sec-label">Подбор размера</p><h2 class="sec-title">Найдите свой размер</h2></div>
+  </div>
+  <div class="size-inner">
+    <div>
+      <p class="size-text">Правильно подобранный размер — залог комфорта и красоты. Воспользуйтесь нашей таблицей или одним из способов ниже.</p>
+      <div class="size-steps">
+        <div class="size-step"><div class="step-num">1</div><p class="step-text">Обмотайте нитку или полоску бумаги вокруг пальца плотно, но не туго</p></div>
+        <div class="size-step"><div class="step-num">2</div><p class="step-text">Отметьте место, где конец нитки встречается с другим концом</p></div>
+        <div class="size-step"><div class="step-num">3</div><p class="step-text">Измерьте длину нитки в миллиметрах — это и есть ваш обхват пальца</p></div>
+        <div class="size-step"><div class="step-num">4</div><p class="step-text">Найдите ваш обхват в таблице и определите размер кольца</p></div>
+      </div>
+      <button class="btn-gold">Скачать шаблон размеров</button>
+    </div>
+    <div class="size-visual">
+      <div class="size-ruler">
+        <p class="size-ruler-title">Таблица размеров колец A.RAM</p>
+        <table class="size-table">
+          <thead><tr><th>Размер RU</th><th>Обхват (мм)</th><th>Диаметр (мм)</th><th>Размер EU</th></tr></thead>
+          <tbody>
+            <tr><td>15</td><td>47.1</td><td>15.0</td><td>47</td></tr>
+            <tr><td>15.5</td><td>48.7</td><td>15.5</td><td>49</td></tr>
+            <tr><td class="size-highlight">16</td><td class="size-highlight">50.3</td><td class="size-highlight">16.0</td><td class="size-highlight">50</td></tr>
+            <tr><td>16.5</td><td>51.8</td><td>16.5</td><td>52</td></tr>
+            <tr><td>17</td><td>53.4</td><td>17.0</td><td>53</td></tr>
+            <tr><td>17.5</td><td>55.0</td><td>17.5</td><td>55</td></tr>
+            <tr><td>18</td><td>56.5</td><td>18.0</td><td>57</td></tr>
+            <tr><td>18.5</td><td>58.1</td><td>18.5</td><td>58</td></tr>
+            <tr><td>19</td><td>59.7</td><td>19.0</td><td>60</td></tr>
+            <tr><td>19.5</td><td>61.3</td><td>19.5</td><td>61</td></tr>
+            <tr><td>20</td><td>62.8</td><td>20.0</td><td>63</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:10px;color:var(--gray);margin-top:12px;text-align:center">* Выделен наиболее популярный размер</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section class="section">
+  <div class="sec-head">
+    <div><p class="sec-label">A.RAM Collections</p><h2 class="sec-title">Коллекции</h2></div>
+    <a class="sec-more">Все коллекции →</a>
+  </div>
+  <div class="colls">
+    <div class="coll-card" onclick="location.href='catalog.html'">
+      <div class="coll-inner" style="background:linear-gradient(135deg,#1a1208,#0d0a04)">💍</div>
+      <div class="coll-ovl"></div>
+      <div class="coll-body"><p class="coll-tag">Флагман · 2025</p><h3 class="coll-name">Eternal Gold</h3><p class="coll-sub">38 украшений · Золото 585</p><span class="coll-btn">Смотреть коллекцию</span></div>
+    </div>
+    <div class="coll-card" onclick="location.href='catalog.html'">
+      <div class="coll-inner" style="background:linear-gradient(135deg,#0f0d18,#08080d)">💎</div>
+      <div class="coll-ovl"></div>
+      <div class="coll-body"><p class="coll-tag">Лимитированная</p><h3 class="coll-name">Crystal Nights</h3><p class="coll-sub">24 украшения · Серебро 925</p><span class="coll-btn">Смотреть коллекцию</span></div>
+    </div>
+    <div class="coll-card" onclick="location.href='catalog.html'">
+      <div class="coll-inner" style="background:linear-gradient(135deg,#1a0808,#0d0404)">🌹</div>
+      <div class="coll-ovl"></div>
+      <div class="coll-body"><p class="coll-tag">Новинка · Весна</p><h3 class="coll-name">Rose & Ruby</h3><p class="coll-sub">19 украшений · Золото 585</p><span class="coll-btn">Смотреть коллекцию</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section">
+  <div class="sec-head">
+    <div><p class="sec-label">Наши магазины</p><h2 class="sec-title">Найти магазин A.RAM</h2></div>
+    <a class="sec-more">Все магазины →</a>
+  </div>
+  <div class="map-inner">
+    <div>
+      <div class="map-list">
+        <div class="map-item active" onclick="selectStore(this)">
+          <p class="map-city">Ереван</p>
+          <p class="map-addr">пр. Маштоца, 25, ТЦ «Ереван Молл», 1 этаж</p>
+          <p class="map-hours">Пн–Вс: 10:00 – 21:00</p>
+          <p class="map-phone-sm">+374 10 00 00 00</p>
+        </div>
+        <div class="map-item" onclick="selectStore(this)">
+          <p class="map-city">Москва</p>
+          <p class="map-addr">Тверская ул., 12, ТЦ «Галерея», 2 этаж</p>
+          <p class="map-hours">Пн–Вс: 10:00 – 22:00</p>
+          <p class="map-phone-sm">+7 495 000 00 00</p>
+        </div>
+        <div class="map-item" onclick="selectStore(this)">
+          <p class="map-city">Алматы</p>
+          <p class="map-addr">пр. Достык, 111, ТЦ «Mega», 1 этаж</p>
+          <p class="map-hours">Пн–Вс: 10:00 – 21:00</p>
+          <p class="map-phone-sm">+7 727 000 00 00</p>
+        </div>
+        <div class="map-item" onclick="selectStore(this)">
+          <p class="map-city">Тбилиси</p>
+          <p class="map-addr">ул. Руставели, 8, ТЦ «Galleria»</p>
+          <p class="map-hours">Пн–Вс: 11:00 – 21:00</p>
+          <p class="map-phone-sm">+995 32 000 00 00</p>
+        </div>
+      </div>
+    </div>
+    <div class="map-visual">
+      <div class="map-grid"></div>
+      <div class="map-pin">📍</div>
+      <p class="map-note">Интерактивная карта</p>
+      <p class="map-note-sub">Подключите Google Maps API для отображения карты</p>
+      <button class="btn-gold" style="margin-top:8px;font-size:10px;padding:10px 24px">Открыть в картах</button>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<div class="app-sec">
+  <div>
+    <p class="app-label">Мобильное приложение</p>
+    <h2 class="app-h">A.RAM<br>в вашем<br><em>телефоне</em></h2>
+    <p class="app-txt">Весь каталог, эксклюзивные предложения и персональные скидки — в одном приложении</p>
+    <div class="app-btns">
+      <div class="store-btn"><span class="store-icon">🍎</span><div class="store-txt"><span>Загрузить в</span><strong>App Store</strong></div></div>
+      <div class="store-btn"><span class="store-icon">▶</span><div class="store-txt"><span>Доступно в</span><strong>Google Play</strong></div></div>
+    </div>
+    <div class="app-feats">
+      <div class="app-feat"><div class="feat-dot"></div><p class="feat-txt">Более 2 000 украшений</p></div>
+      <div class="app-feat"><div class="feat-dot"></div><p class="feat-txt">Скидки только в app</p></div>
+      <div class="app-feat"><div class="feat-dot"></div><p class="feat-txt">Отслеживание заказов</p></div>
+      <div class="app-feat"><div class="feat-dot"></div><p class="feat-txt">Бонусная программа</p></div>
+    </div>
+  </div>
+  <div class="phones">
+    <div class="phone"><div class="phone-screen"><span class="ps-ico">💍</span><span class="ps-logo">A.RAM</span><span class="ps-lbl">Украшения</span></div></div>
+    <div class="phone"><div class="phone-screen"><span class="ps-ico">✨</span><span class="ps-logo">A.RAM</span><span class="ps-lbl">Каталог</span></div></div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<div class="revs">
+  <div class="sec-head">
+    <div><p class="sec-label">Отзывы</p><h2 class="sec-title">Нам доверяют</h2></div>
+    <a class="sec-more">Все отзывы →</a>
+  </div>
+  <div class="revs-grid">
+    <div class="rev"><div class="rev-stars">★★★★★</div><p class="rev-txt">«Купила кольцо на годовщину — качество превзошло ожидания. Золото яркое, бриллиант искрится. Упаковка просто роскошная!»</p><div class="rev-foot"><div><p class="rev-name">Анастасия К.</p><p class="rev-city">Москва</p></div><p class="rev-date">12 апр 2025</p></div></div>
+    <div class="rev"><div class="rev-stars">★★★★★</div><p class="rev-txt">«Заказывал колье для жены. Доставка быстрая, всё в идеальном виде. Жена в восторге — лучший подарок за все годы!»</p><div class="rev-foot"><div><p class="rev-name">Тимур Р.</p><p class="rev-city">Алматы</p></div><p class="rev-date">3 апр 2025</p></div></div>
+    <div class="rev"><div class="rev-stars">★★★★★</div><p class="rev-txt">«Третья покупка в A.RAM. Украшения носятся отлично, не темнеют. Менеджеры помогли с размером — спасибо!»</p><div class="rev-foot"><div><p class="rev-name">Диана М.</p><p class="rev-city">Ереван</p></div><p class="rev-date">27 мар 2025</p></div></div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="nl">
+  <div><h3 class="nl-h">Подпишитесь на A.RAM</h3><p class="nl-sub">Получайте первыми информацию о новых коллекциях и акциях. Скидка 10% на первый заказ!</p></div>
+  <div>
+    <div class="nl-form"><input class="nl-inp" type="email" placeholder="Ваш e-mail"><button class="nl-btn">Подписаться</button></div>
+    <p class="nl-note">Нажимая «Подписаться», вы соглашаетесь с политикой конфиденциальности</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-main">
+    <div>
+      <div class="f-logo">A<span>.</span>RAM</div>
+      <p class="f-desc">Авторские ювелирные украшения и бижутерия премиального качества. Создаём красоту с 2012 года.</p>
+      <div class="f-socs">
+        <div class="fsoc">VK</div><div class="fsoc">TG</div><div class="fsoc">WA</div><div class="fsoc">IG</div><div class="fsoc">YT</div>
+      </div>
+    </div>
+    <div>
+      <p class="f-head">Каталог</p>
+      <div class="f-links">
+        <a class="f-lnk" onclick="location.href='catalog.html'">Кольца</a>
+        <a class="f-lnk" onclick="location.href='catalog.html'">Серьги</a>
+        <a class="f-lnk" onclick="location.href='catalog.html'">Колье</a>
+        <a class="f-lnk" onclick="location.href='catalog.html'">Браслеты</a>
+        <a class="f-lnk" onclick="location.href='catalog.html'">Подвески</a>
+        <a class="f-lnk" onclick="location.href='catalog.html'">Бижутерия</a>
+      </div>
+    </div>
+    <div>
+      <p class="f-head">Компания</p>
+      <div class="f-links">
+        <a class="f-lnk">О бренде A.RAM</a>
+        <a class="f-lnk">Наши мастера</a>
+        <a class="f-lnk">Сертификаты</a>
+        <a class="f-lnk">Журнал</a>
+        <a class="f-lnk">Вакансии</a>
+      </div>
+    </div>
+    <div>
+      <p class="f-head">Контакты</p>
+      <div class="f-contacts">
+        <div class="fci"><span>Телефон</span><span class="phone">8 800 100 00 00</span></div>
+        <div class="fci"><span>Email</span><span>info@aram-jewelry.ru</span></div>
+        <div class="fci"><span>Режим работы</span><span>Ежедневно 9:00 – 21:00</span></div>
+        <div class="fci"><span>Магазины</span><span style="color:var(--gold);cursor:pointer">Найти магазин →</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <p class="f-copy">© 2025 A.RAM Ювелирные изделия. Все права защищены.</p>
+    <div class="f-bot-links">
+      <a class="f-blnk">Политика конфиденциальности</a>
+      <a class="f-blnk">Условия использования</a>
+      <a class="f-blnk">Доставка и оплата</a>
+    </div>
+    <div class="pay-icons"><div class="pay">VISA</div><div class="pay">MC</div><div class="pay">МИР</div></div>
+  </div>
+</footer>
+
+<script>
+// SLIDER
+let cur=0,tot=3;
+function goSlide(n){
+  document.querySelectorAll('.hero-slide').forEach((s,i)=>s.classList.toggle('active',i===n));
+  document.querySelectorAll('.sdot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  cur=n;
+}
+function nextSlide(){goSlide((cur+1)%tot)}
+function prevSlide(){goSlide((cur-1+tot)%tot)}
+setInterval(nextSlide,5000);
+
+// TABS
+function setTab(el){
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// CART
+function addToCart(e){
+  e.stopPropagation();
+  const badge=document.getElementById('cartCount');
+  badge.textContent=parseInt(badge.textContent)+1;
+  badge.style.transform='scale(1.4)';
+  setTimeout(()=>badge.style.transform='scale(1)',300);
+}
+
+// MAP
+function selectStore(el){
+  document.querySelectorAll('.map-item').forEach(m=>m.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
