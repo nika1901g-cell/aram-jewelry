@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Кольцо «Аврора» — A.RAM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold2:#E8C97A;
+  --black:#0A0A0A;--dark:#111;--dark2:#181818;--dark3:#222;
+  --white:#FAFAF8;--gray:#888;
+  --border:rgba(201,168,76,0.2);--border2:rgba(255,255,255,0.08);
+}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;overflow-x:hidden}
+a{text-decoration:none;color:inherit;cursor:pointer}
+
+/* TOPBAR */
+.topbar{background:var(--dark2);border-bottom:1px solid var(--border2);padding:7px 40px;display:flex;align-items:center;justify-content:space-between}
+.topbar-left,.topbar-right{display:flex;gap:20px;align-items:center}
+.tb-link{font-size:11px;color:var(--gray);cursor:pointer;transition:color .2s}.tb-link:hover{color:var(--gold)}
+.tb-sep{width:1px;height:12px;background:var(--border2)}
+.tb-phone{font-size:11px;color:var(--gold);font-weight:500}
+.promo-bar{background:var(--gold);padding:8px 40px;text-align:center;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--black)}
+
+/* HEADER */
+header{background:rgba(10,10,10,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+.header-main{padding:0 40px;height:68px;display:flex;align-items:center;gap:20px}
+.logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;letter-spacing:5px;flex-shrink:0;cursor:pointer}
+.logo span{color:var(--gold)}
+.search-wrap{flex:1;max-width:500px;position:relative;margin:0 12px}
+.search-input{width:100%;padding:10px 16px 10px 42px;background:var(--dark3);border:1px solid var(--border2);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color .2s}
+.search-input::placeholder{color:var(--gray)}
+.search-input:focus{border-color:var(--gold)}
+.search-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gray)}
+.search-ico svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
+.h-icons{display:flex;align-items:center;gap:2px;margin-left:auto}
+.h-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;cursor:pointer;color:rgba(255,255,255,.6);transition:color .2s;background:none;border:none;font-family:'Inter',sans-serif;position:relative}
+.h-btn:hover{color:var(--gold)}
+.h-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5}
+.h-btn span{font-size:9px;letter-spacing:.5px;text-transform:uppercase}
+.cart-badge{position:absolute;top:4px;right:8px;width:17px;height:17px;background:var(--gold);color:var(--black);font-size:9px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* NAV */
+nav{background:var(--dark2);border-bottom:1px solid var(--border)}
+.nav-inner{padding:0 40px;display:flex;align-items:center}
+.nav-link{padding:14px 16px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.65);transition:color .2s;font-weight:500;cursor:pointer}
+.nav-link:hover{color:var(--gold)}
+.nav-link.sale-link{color:var(--gold)}
+
+/* BREADCRUMB */
+.breadcrumb{padding:16px 40px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border2)}
+.bc-item{font-size:12px;color:var(--gray);cursor:pointer;transition:color .2s}.bc-item:hover{color:var(--gold)}
+.bc-sep{font-size:12px;color:var(--gray)}
+.bc-current{font-size:12px;color:rgba(255,255,255,.6)}
+
+/* PRODUCT LAYOUT */
+.product-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0 40px;margin:40px 0}
+.product-wrap > *{padding:0 24px}
+
+/* GALLERY */
+.gallery{}
+.gallery-main{position:relative;background:var(--dark2);border:1px solid var(--border2);aspect-ratio:1;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden}
+.gallery-main-img{font-size:140px;opacity:.07;transition:transform .5s}
+.gallery-main:hover .gallery-main-img{transform:scale(1.05)}
+.gallery-badge{position:absolute;top:16px;left:16px;padding:6px 14px;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;background:var(--gold);color:var(--black)}
+.gallery-wish{position:absolute;top:16px;right:16px;width:40px;height:40px;background:rgba(0,0,0,.7);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.gallery-wish:hover{border-color:var(--gold)}
+.gallery-wish svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.5}
+.gallery-share{position:absolute;bottom:16px;right:16px;width:40px;height:40px;background:rgba(0,0,0,.7);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.gallery-share:hover{border-color:var(--gold)}
+.gallery-share svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:1.5}
+.gallery-thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.gthumb{background:var(--dark2);border:1px solid var(--border2);aspect-ratio:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s;font-size:28px;opacity:.5}
+.gthumb.active,.gthumb:hover{border-color:var(--gold);opacity:1}
+
+/* PRODUCT INFO */
+.product-info{}
+.prod-brand{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.prod-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,42px);font-weight:300;line-height:1.1;margin-bottom:12px}
+.prod-rating{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.prod-stars{color:var(--gold);font-size:14px;letter-spacing:2px}
+.prod-reviews-link{font-size:12px;color:rgba(255,255,255,.4);border-bottom:1px solid rgba(255,255,255,.15);cursor:pointer;transition:all .2s}
+.prod-reviews-link:hover{color:var(--gold);border-color:var(--gold)}
+.prod-price-block{margin-bottom:24px;padding:20px;background:var(--dark2);border:1px solid var(--border2)}
+.prod-price-main{font-size:32px;font-weight:600;color:var(--gold);margin-bottom:4px}
+.prod-price-old{font-size:16px;color:rgba(255,255,255,.3);text-decoration:line-through;margin-right:12px}
+.prod-price-save{font-size:12px;color:#4CAF50;font-weight:500}
+.prod-price-installment{font-size:12px;color:rgba(255,255,255,.4);margin-top:8px}
+.prod-price-installment span{color:var(--gold)}
+
+/* SIZE SELECTOR */
+.prod-section{margin-bottom:24px}
+.prod-section-title{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.size-guide-link{font-size:10px;color:var(--gold);border-bottom:1px solid var(--gold);cursor:pointer}
+.size-selector{display:flex;flex-wrap:wrap;gap:8px}
+.size-opt{padding:10px 16px;background:var(--dark3);border:1px solid var(--border2);font-size:12px;cursor:pointer;transition:all .2s;min-width:52px;text-align:center}
+.size-opt:hover,.size-opt.active{border-color:var(--gold);color:var(--gold)}
+.size-opt.unavailable{opacity:.3;cursor:not-allowed;text-decoration:line-through}
+
+/* METAL SELECTOR */
+.metal-selector{display:flex;gap:10px}
+.metal-opt{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+.metal-circle{width:40px;height:40px;border-radius:50%;border:2px solid transparent;transition:border-color .2s}
+.metal-opt.active .metal-circle,.metal-opt:hover .metal-circle{border-color:var(--gold)}
+.metal-name{font-size:10px;color:rgba(255,255,255,.5);text-align:center}
+.metal-opt.active .metal-name{color:var(--gold)}
+
+/* ADD TO CART */
+.add-section{display:flex;gap:10px;margin-bottom:20px}
+.btn-cart{flex:1;padding:16px;background:var(--gold);color:var(--black);border:none;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:background .3s}
+.btn-cart:hover{background:var(--gold2)}
+.btn-buy{flex:1;padding:16px;background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.25);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.btn-buy:hover{border-color:var(--gold);color:var(--gold)}
+.btn-wish-lg{width:52px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;background:none}
+.btn-wish-lg:hover{border-color:var(--gold)}
+.btn-wish-lg svg{width:20px;height:20px;fill:none;stroke:rgba(255,255,255,.6);stroke-width:1.5}
+
+/* DELIVERY INFO */
+.delivery-info{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;padding:16px;background:var(--dark2);border:1px solid var(--border2)}
+.di-item{display:flex;align-items:center;gap:12px}
+.di-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.di-icon svg{width:18px;height:18px;fill:none;stroke:var(--gold);stroke-width:1.5}
+.di-text p:first-child{font-size:12px;font-weight:500;margin-bottom:2px}
+.di-text p:last-child{font-size:11px;color:var(--gray)}
+
+/* TABS */
+.prod-tabs{border-bottom:1px solid var(--border2);margin-bottom:24px;display:flex}
+.ptab{padding:12px 20px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;margin-bottom:-1px}
+.ptab.active,.ptab:hover{color:var(--gold);border-color:var(--gold)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.spec-table{width:100%;border-collapse:collapse}
+.spec-table tr{border-bottom:1px solid var(--border2)}
+.spec-table td{padding:10px 0;font-size:12px}
+.spec-table td:first-child{color:var(--gray);width:45%}
+.spec-table td:last-child{color:rgba(255,255,255,.75);font-weight:500}
+.desc-text{font-size:13px;color:rgba(255,255,255,.55);line-height:1.8}
+
+/* CERTIFICATES */
+.certs{display:flex;gap:12px;margin-top:20px}
+.cert-item{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--dark3);border:1px solid var(--border2)}
+.cert-icon{font-size:18px}
+.cert-text{font-size:11px;color:rgba(255,255,255,.5)}
+
+/* RELATED */
+.related{padding:60px 40px;background:var(--dark)}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px}
+.sec-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3vw,40px);font-weight:300}
+.sec-more{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);border-bottom:1px solid rgba(255,255,255,.15);padding-bottom:3px;cursor:pointer;transition:all .2s}
+.sec-more:hover{color:var(--gold);border-color:var(--gold)}
+.related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pcard{cursor:pointer}
+.pcard-img{position:relative;background:var(--dark2);aspect-ratio:3/4;overflow:hidden;margin-bottom:12px}
+.pcard-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:56px;opacity:.06;transition:transform .5s}
+.pcard:hover .pcard-inner{transform:scale(1.07)}
+.pbadge{position:absolute;top:10px;left:10px;padding:4px 10px;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;z-index:2}
+.b-new{background:var(--gold);color:var(--black)}
+.b-sale{background:#8B0000;color:#fff}
+.pquick{position:absolute;bottom:0;left:0;right:0;padding:10px;background:rgba(0,0,0,.88);transform:translateY(100%);transition:transform .25s}
+.pcard:hover .pquick{transform:translateY(0)}
+.pquick-btn{width:100%;padding:10px;background:var(--gold);color:var(--black);border:none;font-family:'Inter',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+.pstars{font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px}
+.pname{font-size:13px;margin-bottom:4px}
+.pmat{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
+.pprice-row{display:flex;align-items:center;gap:10px}
+.pprice{font-size:14px;font-weight:600;color:var(--gold)}
+.pold{font-size:12px;color:rgba(255,255,255,.28);text-decoration:line-through}
+
+/* REVIEWS SECTION */
+.reviews-section{padding:60px 40px;background:var(--dark2)}
+.reviews-grid{display:grid;grid-template-columns:1fr 2fr;gap:40px;margin-top:32px}
+.rating-summary{background:var(--dark3);border:1px solid var(--border2);padding:32px;text-align:center}
+.big-rating{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:var(--gold);line-height:1}
+.big-stars{font-size:20px;color:var(--gold);letter-spacing:3px;margin:8px 0}
+.rating-count{font-size:12px;color:var(--gray)}
+.rating-bars{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+.rb-row{display:flex;align-items:center;gap:10px}
+.rb-label{font-size:11px;color:var(--gray);width:20px;text-align:right}
+.rb-bar{flex:1;height:4px;background:var(--dark2);border-radius:2px;overflow:hidden}
+.rb-fill{height:100%;background:var(--gold);border-radius:2px}
+.rb-count{font-size:11px;color:var(--gray);width:20px}
+.reviews-list{display:flex;flex-direction:column;gap:16px}
+.rev-card{background:var(--dark3);border:1px solid var(--border2);padding:24px}
+.rev-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.rev-stars{color:var(--gold);font-size:12px;letter-spacing:2px}
+.rev-date{font-size:11px;color:var(--gray)}
+.rev-author{font-size:12px;font-weight:600;margin-bottom:8px}
+.rev-text{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7}
+.rev-verified{font-size:10px;color:#4CAF50;margin-top:8px;display:flex;align-items:center;gap:4px}
+
+/* FOOTER */
+footer{background:var(--black);border-top:1px solid var(--border)}
+.foot-main{padding:48px 40px 32px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:5px;margin-bottom:12px}
+.f-logo span{color:var(--gold)}
+.f-desc{font-size:12px;line-height:1.8;color:rgba(255,255,255,.3);max-width:220px}
+.f-head{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:600}
+.f-links{display:flex;flex-direction:column;gap:9px}
+.f-lnk{font-size:12px;color:rgba(255,255,255,.38);cursor:pointer;transition:all .2s}
+.f-lnk:hover{color:var(--gold);padding-left:4px}
+.foot-bot{padding:16px 40px;border-top:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center}
+.f-copy{font-size:11px;color:rgba(255,255,255,.18)}
+.pay-icons{display:flex;gap:8px}
+.pay{padding:4px 10px;border:1px solid var(--border2);font-size:10px;color:rgba(255,255,255,.25);font-weight:700}
+
+/* TOAST */
+.toast{position:fixed;bottom:32px;right:32px;background:var(--dark2);border:1px solid var(--gold);padding:16px 24px;font-size:13px;z-index:999;transform:translateY(100px);opacity:0;transition:all .35s;display:flex;align-items:center;gap:10px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-icon{color:var(--gold);font-size:18px}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="tb-link">📍 Ереван</span>
+    <div class="tb-sep"></div>
+    <span class="tb-link">Магазины</span>
+    <span class="tb-link">Бонусная программа</span>
+  </div>
+  <div class="topbar-right">
+    <span class="tb-phone">8 800 100 00 00</span>
+    <div class="tb-sep"></div>
+    <span class="tb-link">RU</span>
+  </div>
+</div>
+<div class="promo-bar">✦ &nbsp;Бесплатная доставка от 5 000 ₽ &nbsp;✦ &nbsp;Возврат 14 дней &nbsp;✦ &nbsp;Гарантия качества &nbsp;✦</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-main">
+    <div class="logo" onclick="location.href='index.html'">A<span>.</span>RAM</div>
+    <div class="search-wrap">
+      <span class="search-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input class="search-input" type="text" placeholder="Поиск украшений...">
+    </div>
+    <div class="h-icons">
+      <button class="h-btn" onclick="location.href='account.html'">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Войти</span>
+      </button>
+      <button class="h-btn">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        <span>Избранное</span>
+      </button>
+      <button class="h-btn" onclick="location.href='cart.html'">
+        <div class="cart-badge" id="cartCount">3</div>
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Корзина</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-link" onclick="location.href='index.html'">Главная</span>
+    <span class="nav-link" onclick="location.href='catalog.html'" style="color:var(--gold)">Украшения</span>
+    <span class="nav-link">Бижутерия</span>
+    <span class="nav-link">Коллекции</span>
+    <span class="nav-link">Новинки</span>
+    <span class="nav-link sale-link">Акции 🔥</span>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <span class="bc-item" onclick="location.href='index.html'">Главная</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-item" onclick="location.href='catalog.html'">Украшения</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-item" onclick="location.href='catalog.html'">Кольца</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-current">Кольцо «Аврора»</span>
+</div>
+
+<!-- PRODUCT -->
+<div class="product-wrap">
+
+  <!-- GALLERY -->
+  <div class="gallery">
+    <div class="gallery-main">
+      <span class="gallery-badge">Новинка</span>
+      <div class="gallery-main-img" id="mainImg">💍</div>
+      <div class="gallery-wish">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </div>
+      <div class="gallery-share">
+        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      </div>
+    </div>
+    <div class="gallery-thumbs">
+      <div class="gthumb active" onclick="setThumb(this,'💍')">💍</div>
+      <div class="gthumb" onclick="setThumb(this,'✨')">✨</div>
+      <div class="gthumb" onclick="setThumb(this,'💎')">💎</div>
+      <div class="gthumb" onclick="setThumb(this,'🔮')">🔮</div>
+      <div class="gthumb" onclick="setThumb(this,'👑')">👑</div>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div class="product-info">
+    <p class="prod-brand">A.RAM · Коллекция Eternal Gold</p>
+    <h1 class="prod-title">Кольцо «Аврора»</h1>
+    <div class="prod-rating">
+      <span class="prod-stars">★★★★★</span>
+      <span class="prod-reviews-link">24 отзыва</span>
+      <span style="font-size:11px;color:var(--gray)">· Артикул: AR-K-2025-001</span>
+    </div>
+
+    <!-- PRICE -->
+    <div class="prod-price-block">
+      <div>
+        <span class="prod-price-old">65 000 ₽</span>
+        <span class="prod-price-save">Скидка 25%</span>
+      </div>
+      <div class="prod-price-main">48 900 ₽</div>
+      <p class="prod-price-installment">или <span>4 075 ₽/мес</span> в рассрочку на 12 месяцев</p>
+    </div>
+
+    <!-- METAL -->
+    <div class="prod-section">
+      <p class="prod-section-title">Металл</p>
+      <div class="metal-selector">
+        <div class="metal-opt active" onclick="selectMetal(this)">
+          <div class="metal-circle" style="background:linear-gradient(135deg,#FFD700,#B8860B)"></div>
+          <span class="metal-name">Золото 585</span>
+        </div>
+        <div class="metal-opt" onclick="selectMetal(this)">
+          <div class="metal-circle" style="background:linear-gradient(135deg,#F5F5F5,#C0C0C0)"></div>
+          <span class="metal-name">Белое золото</span>
+        </div>
+        <div class="metal-opt" onclick="selectMetal(this)">
+          <div class="metal-circle" style="background:linear-gradient(135deg,#FADADD,#C48B9F)"></div>
+          <span class="metal-name">Розовое золото</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIZE -->
+    <div class="prod-section">
+      <p class="prod-section-title">
+        Размер кольца
+        <span class="size-guide-link" onclick="location.href='index.html#size'">Таблица размеров</span>
+      </p>
+      <div class="size-selector">
+        <div class="size-opt unavailable">15</div>
+        <div class="size-opt" onclick="selectSize(this)">15.5</div>
+        <div class="size-opt active" onclick="selectSize(this)">16</div>
+        <div class="size-opt" onclick="selectSize(this)">16.5</div>
+        <div class="size-opt" onclick="selectSize(this)">17</div>
+        <div class="size-opt" onclick="selectSize(this)">17.5</div>
+        <div class="size-opt unavailable">18</div>
+        <div class="size-opt" onclick="selectSize(this)">18.5</div>
+        <div class="size-opt" onclick="selectSize(this)">19</div>
+      </div>
+    </div>
+
+    <!-- ADD TO CART -->
+    <div class="add-section">
+      <button class="btn-cart" onclick="addToCart()">В корзину</button>
+      <button class="btn-buy" onclick="location.href='cart.html'">Купить сейчас</button>
+      <button class="btn-wish-lg">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </button>
+    </div>
+
+    <!-- DELIVERY -->
+    <div class="delivery-info">
+      <div class="di-item">
+        <div class="di-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4a2 2 0 012 2v5a2 2 0 01-2 2h-4"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="di-text"><p>Бесплатная доставка</p><p>Курьером по городу или Почтой России</p></div>
+      </div>
+      <div class="di-item">
+        <div class="di-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="di-text"><p>Гарантия 1 год</p><p>Сертификат подлинности в комплекте</p></div>
+      </div>
+      <div class="di-item">
+        <div class="di-icon"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div>
+        <div class="di-text"><p>Возврат 14 дней</p><p>Если не подошёл размер — обменяем бесплатно</p></div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="prod-tabs">
+      <div class="ptab active" onclick="setTab(this,'desc')">Описание</div>
+      <div class="ptab" onclick="setTab(this,'specs')">Характеристики</div>
+      <div class="ptab" onclick="setTab(this,'care')">Уход</div>
+    </div>
+
+    <div class="tab-content active" id="tab-desc">
+      <p class="desc-text">Кольцо «Аврора» — украшение из коллекции Eternal Gold, воплощающее женственность и изящество. Изделие выполнено из золота 585 пробы с натуральным бриллиантом чистоты VS1 и цвета G весом 0.15 карата.</p>
+      <p class="desc-text" style="margin-top:12px">Форма кольца повторяет очертания утреннего неба — плавные линии и мягкий блеск металла создают образ рассветного света. Идеальный подарок для себя или любимого человека.</p>
+      <div class="certs">
+        <div class="cert-item"><span class="cert-icon">📜</span><span class="cert-text">Сертификат GIA</span></div>
+        <div class="cert-item"><span class="cert-icon">🏅</span><span class="cert-text">Проба 585</span></div>
+        <div class="cert-item"><span class="cert-icon">✅</span><span class="cert-text">Гарантия 1 год</span></div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-specs">
+      <table class="spec-table">
+        <tr><td>Металл</td><td>Золото 585 пробы</td></tr>
+        <tr><td>Вставка</td><td>Бриллиант натуральный</td></tr>
+        <tr><td>Вес бриллианта</td><td>0.15 карата</td></tr>
+        <tr><td>Чистота</td><td>VS1</td></tr>
+        <tr><td>Цвет камня</td><td>G (почти бесцветный)</td></tr>
+        <tr><td>Вес изделия</td><td>2.8 г</td></tr>
+        <tr><td>Покрытие</td><td>Родирование</td></tr>
+        <tr><td>Производство</td><td>Ручная работа, A.RAM</td></tr>
+        <tr><td>Артикул</td><td>AR-K-2025-001</td></tr>
+        <tr><td>Коллекция</td><td>Eternal Gold 2025</td></tr>
+      </table>
+    </div>
+
+    <div class="tab-content" id="tab-care">
+      <p class="desc-text">Для сохранения блеска и красоты украшения следуйте простым правилам ухода:</p>
+      <ul style="margin-top:12px;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+        <li style="font-size:13px;color:rgba(255,255,255,.55)">Снимайте украшение перед сном, занятиями спортом и водными процедурами</li>
+        <li style="font-size:13px;color:rgba(255,255,255,.55)">Храните в отдельной коробочке или мягком чехле</li>
+        <li style="font-size:13px;color:rgba(255,255,255,.55)">Избегайте контакта с парфюмом, кремами и химическими веществами</li>
+        <li style="font-size:13px;color:rgba(255,255,255,.55)">Чистите мягкой тканью или специальным раствором для ювелирных изделий</li>
+        <li style="font-size:13px;color:rgba(255,255,255,.55)">Раз в год рекомендуем профессиональную чистку в нашем магазине</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- RELATED -->
+<div class="related">
+  <div class="sec-head">
+    <div><p class="sec-label">Похожие украшения</p><h2 class="sec-title">Вам может понравиться</h2></div>
+    <a class="sec-more" onclick="location.href='catalog.html'">Смотреть все →</a>
+  </div>
+  <div class="related-grid">
+    <div class="pcard" onclick="location.href='product.html'">
+      <div class="pcard-img"><span class="pbadge b-new">Новинка</span><div class="pcard-inner">✨</div><div class="pquick"><button class="pquick-btn">В корзину</button></div></div>
+      <div class="pstars">★★★★★</div><p class="pname">Серьги «Аврора»</p><p class="pmat">Золото 585 · Бриллиант</p><div class="pprice-row"><span class="pprice">38 500 ₽</span></div>
+    </div>
+    <div class="pcard" onclick="location.href='product.html'">
+      <div class="pcard-img"><div class="pcard-inner">📿</div><div class="pquick"><button class="pquick-btn">В корзину</button></div></div>
+      <div class="pstars">★★★★★</div><p class="pname">Колье «Аврора»</p><p class="pmat">Золото 585 · Бриллиант</p><div class="pprice-row"><span class="pprice">62 000 ₽</span></div>
+    </div>
+    <div class="pcard" onclick="location.href='product.html'">
+      <div class="pcard-img"><span class="pbadge b-sale">−20%</span><div class="pcard-inner">🪢</div><div class="pquick"><button class="pquick-btn">В корзину</button></div></div>
+      <div class="pstars">★★★★☆</div><p class="pname">Браслет «Звезда»</p><p class="pmat">Золото 585 · Сапфир</p><div class="pprice-row"><span class="pprice">44 800 ₽</span><span class="pold">56 000 ₽</span></div>
+    </div>
+    <div class="pcard" onclick="location.href='product.html'">
+      <div class="pcard-img"><div class="pcard-inner">💍</div><div class="pquick"><button class="pquick-btn">В корзину</button></div></div>
+      <div class="pstars">★★★★★</div><p class="pname">Кольцо «Луна»</p><p class="pmat">Золото 750 · Рубин</p><div class="pprice-row"><span class="pprice">71 200 ₽</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<div class="reviews-section">
+  <div class="sec-head">
+    <div><p class="sec-label">Отзывы покупателей</p><h2 class="sec-title">Отзывы о товаре</h2></div>
+    <button style="padding:10px 24px;background:transparent;border:1px solid var(--border);color:rgba(255,255,255,.5);font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='rgba(255,255,255,.5)'">Написать отзыв</button>
+  </div>
+  <div class="reviews-grid">
+    <div class="rating-summary">
+      <div class="big-rating">4.9</div>
+      <div class="big-stars">★★★★★</div>
+      <p class="rating-count">24 отзыва</p>
+      <div class="rating-bars">
+        <div class="rb-row"><span class="rb-label">5★</span><div class="rb-bar"><div class="rb-fill" style="width:88%"></div></div><span class="rb-count">21</span></div>
+        <div class="rb-row"><span class="rb-label">4★</span><div class="rb-bar"><div class="rb-fill" style="width:8%"></div></div><span class="rb-count">2</span></div>
+        <div class="rb-row"><span class="rb-label">3★</span><div class="rb-bar"><div class="rb-fill" style="width:4%"></div></div><span class="rb-count">1</span></div>
+        <div class="rb-row"><span class="rb-label">2★</span><div class="rb-bar"><div class="rb-fill" style="width:0%"></div></div><span class="rb-count">0</span></div>
+        <div class="rb-row"><span class="rb-label">1★</span><div class="rb-bar"><div class="rb-fill" style="width:0%"></div></div><span class="rb-count">0</span></div>
+      </div>
+    </div>
+    <div class="reviews-list">
+      <div class="rev-card">
+        <div class="rev-head"><span class="rev-stars">★★★★★</span><span class="rev-date">12 апреля 2025</span></div>
+        <p class="rev-author">Анастасия К., Москва</p>
+        <p class="rev-text">Кольцо просто невероятное! Бриллиант сверкает так, что глаз не отвести. Упаковка роскошная, всё продумано до мелочей. Буду заказывать ещё!</p>
+        <p class="rev-verified">✓ Подтверждённая покупка</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-head"><span class="rev-stars">★★★★★</span><span class="rev-date">3 апреля 2025</span></div>
+        <p class="rev-author">Диана М., Ереван</p>
+        <p class="rev-text">Покупала в подарок маме. Качество золота отличное, камень чистый и блестящий. Размер подошёл идеально — консультант помог с выбором.</p>
+        <p class="rev-verified">✓ Подтверждённая покупка</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-head"><span class="rev-stars">★★★★☆</span><span class="rev-date">28 марта 2025</span></div>
+        <p class="rev-author">Лейла Г., Баку</p>
+        <p class="rev-text">Очень красивое кольцо, носится комфортно. Единственное — доставка заняла чуть дольше обещанного, но результат того стоил.</p>
+        <p class="rev-verified">✓ Подтверждённая покупка</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-main">
+    <div>
+      <div class="f-logo">A<span>.</span>RAM</div>
+      <p class="f-desc">Авторские ювелирные украшения премиального качества.</p>
+    </div>
+    <div><p class="f-head">Каталог</p><div class="f-links"><a class="f-lnk" onclick="location.href='catalog.html'">Кольца</a><a class="f-lnk" onclick="location.href='catalog.html'">Серьги</a><a class="f-lnk" onclick="location.href='catalog.html'">Колье</a><a class="f-lnk" onclick="location.href='catalog.html'">Браслеты</a></div></div>
+    <div><p class="f-head">Компания</p><div class="f-links"><a class="f-lnk">О бренде</a><a class="f-lnk">Журнал</a><a class="f-lnk">Вакансии</a></div></div>
+    <div><p class="f-head">Помощь</p><div class="f-links"><a class="f-lnk">Доставка</a><a class="f-lnk">Возврат</a><a class="f-lnk">Контакты</a></div></div>
+  </div>
+  <div class="foot-bot">
+    <p class="f-copy">© 2025 A.RAM Ювелирные изделия</p>
+    <div class="pay-icons"><div class="pay">VISA</div><div class="pay">MC</div><div class="pay">МИР</div></div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span>Товар добавлен в корзину!</span>
+</div>
+
+<script>
+function setThumb(el,emoji){
+  document.querySelectorAll('.gthumb').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('mainImg').textContent=emoji;
+}
+function selectSize(el){
+  if(el.classList.contains('unavailable'))return;
+  document.querySelectorAll('.size-opt').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+}
+function selectMetal(el){
+  document.querySelectorAll('.metal-opt').forEach(m=>m.classList.remove('active'));
+  el.classList.add('active');
+}
+function setTab(el,id){
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+function addToCart(){
+  const b=document.getElementById('cartCount');
+  b.textContent=parseInt(b.textContent)+1;
+  const t=document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
