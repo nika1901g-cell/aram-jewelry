@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Каталог украшений — A.RAM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold2:#E8C97A;
+  --black:#0A0A0A;--dark:#111;--dark2:#181818;--dark3:#222;
+  --white:#FAFAF8;--gray:#888;
+  --border:rgba(201,168,76,0.2);--border2:rgba(255,255,255,0.08);
+}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;overflow-x:hidden}
+a{text-decoration:none;color:inherit;cursor:pointer}
+
+/* TOPBAR */
+.topbar{background:var(--dark2);border-bottom:1px solid var(--border2);padding:7px 40px;display:flex;align-items:center;justify-content:space-between}
+.topbar-left,.topbar-right{display:flex;gap:20px;align-items:center}
+.tb-link{font-size:11px;color:var(--gray);cursor:pointer;transition:color .2s}.tb-link:hover{color:var(--gold)}
+.tb-sep{width:1px;height:12px;background:var(--border2)}
+.tb-phone{font-size:11px;color:var(--gold);font-weight:500}
+.promo-bar{background:var(--gold);padding:8px 40px;text-align:center;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--black)}
+
+/* HEADER */
+header{background:rgba(10,10,10,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+.header-main{padding:0 40px;height:68px;display:flex;align-items:center;gap:20px}
+.logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;letter-spacing:5px;flex-shrink:0;cursor:pointer}
+.logo span{color:var(--gold)}
+.search-wrap{flex:1;max-width:500px;position:relative;margin:0 12px}
+.search-input{width:100%;padding:10px 16px 10px 42px;background:var(--dark3);border:1px solid var(--border2);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color .2s}
+.search-input::placeholder{color:var(--gray)}
+.search-input:focus{border-color:var(--gold)}
+.search-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gray)}
+.search-ico svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
+.h-icons{display:flex;align-items:center;gap:2px;margin-left:auto}
+.h-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;cursor:pointer;color:rgba(255,255,255,.6);transition:color .2s;background:none;border:none;font-family:'Inter',sans-serif;position:relative}
+.h-btn:hover{color:var(--gold)}
+.h-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5}
+.h-btn span{font-size:9px;letter-spacing:.5px;text-transform:uppercase}
+.cart-badge{position:absolute;top:4px;right:8px;width:17px;height:17px;background:var(--gold);color:var(--black);font-size:9px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* NAV */
+nav{background:var(--dark2);border-bottom:1px solid var(--border)}
+.nav-inner{padding:0 40px;display:flex;align-items:center}
+.nav-link{padding:14px 16px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.65);transition:color .2s;font-weight:500;white-space:nowrap;cursor:pointer}
+.nav-link:hover{color:var(--gold)}
+.nav-link.sale-link{color:var(--gold)}
+
+/* BREADCRUMB */
+.breadcrumb{padding:16px 40px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border2)}
+.bc-item{font-size:12px;color:var(--gray);cursor:pointer;transition:color .2s}
+.bc-item:hover{color:var(--gold)}
+.bc-sep{font-size:12px;color:var(--gray)}
+.bc-current{font-size:12px;color:rgba(255,255,255,.6)}
+
+/* CATALOG LAYOUT */
+.catalog-wrap{display:grid;grid-template-columns:280px 1fr;gap:0;min-height:80vh}
+
+/* FILTERS SIDEBAR */
+.filters{background:var(--dark2);border-right:1px solid var(--border);padding:28px 24px;position:sticky;top:120px;height:fit-content}
+.filter-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:600}
+.filter-group{margin-bottom:28px;border-bottom:1px solid var(--border2);padding-bottom:24px}
+.filter-group:last-child{border:none;margin-bottom:0}
+.filter-group-title{font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.fg-arrow{width:14px;height:14px;fill:none;stroke:var(--gray);stroke-width:2;transition:transform .25s}
+.fg-open .fg-arrow{transform:rotate(180deg)}
+
+/* PRICE RANGE */
+.price-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.price-inp{width:100%;padding:8px 10px;background:var(--dark3);border:1px solid var(--border2);color:var(--white);font-family:'Inter',sans-serif;font-size:12px;outline:none;transition:border-color .2s}
+.price-inp:focus{border-color:var(--gold)}
+.price-range{width:100%;height:2px;background:var(--dark3);outline:none;-webkit-appearance:none;appearance:none;margin:8px 0}
+.price-range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:var(--gold);border-radius:50%;cursor:pointer}
+
+/* CHECKBOXES */
+.filter-option{display:flex;align-items:center;gap:10px;padding:7px 0;cursor:pointer;transition:color .2s}
+.filter-option:hover{color:var(--gold)}
+.filter-option input[type=checkbox]{display:none}
+.fcheck{width:16px;height:16px;border:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.filter-option input:checked + .fcheck{background:var(--gold);border-color:var(--gold)}
+.fcheck-inner{width:8px;height:8px;background:var(--black);display:none}
+.filter-option input:checked + .fcheck .fcheck-inner{display:block}
+.foption-label{font-size:12px;color:rgba(255,255,255,.65)}
+.foption-count{font-size:10px;color:var(--gray);margin-left:auto}
+
+/* COLOR SWATCHES */
+.color-swatches{display:flex;flex-wrap:wrap;gap:8px}
+.cswatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.cswatch.active,.cswatch:hover{border-color:var(--gold)}
+.cswatch-yellow{background:linear-gradient(135deg,#FFD700,#B8860B)}
+.cswatch-white{background:linear-gradient(135deg,#F5F5F5,#C0C0C0)}
+.cswatch-rose{background:linear-gradient(135deg,#FADADD,#C48B9F)}
+.cswatch-silver{background:linear-gradient(135deg,#C0C0C0,#808080)}
+.cswatch-combined{background:linear-gradient(135deg,#FFD700 50%,#C0C0C0 50%)}
+
+/* SIZE GRID */
+.size-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.size-btn{padding:7px 4px;background:var(--dark3);border:1px solid var(--border2);font-size:11px;text-align:center;cursor:pointer;transition:all .2s}
+.size-btn:hover,.size-btn.active{border-color:var(--gold);color:var(--gold)}
+
+.filter-reset{width:100%;padding:10px;background:transparent;border:1px solid var(--border);color:rgba(255,255,255,.4);font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:16px}
+.filter-reset:hover{border-color:var(--gold);color:var(--gold)}
+
+/* CATALOG MAIN */
+.catalog-main{padding:24px 32px}
+.catalog-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.cat-top-left{display:flex;align-items:center;gap:16px}
+.result-count{font-size:13px;color:rgba(255,255,255,.5)}
+.result-count span{color:var(--white);font-weight:500}
+
+/* ACTIVE FILTERS */
+.active-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.af-tag{display:flex;align-items:center;gap:6px;padding:5px 12px;background:var(--dark3);border:1px solid var(--border);font-size:11px;color:rgba(255,255,255,.65)}
+.af-remove{cursor:pointer;color:var(--gray);font-size:14px;transition:color .2s}
+.af-remove:hover{color:var(--gold)}
+.af-clear{padding:5px 12px;background:transparent;border:1px solid rgba(255,255,255,.1);font-size:11px;color:var(--gray);cursor:pointer;transition:all .2s}
+.af-clear:hover{border-color:var(--gold);color:var(--gold)}
+
+/* SORT */
+.sort-wrap{display:flex;align-items:center;gap:12px}
+.sort-label{font-size:11px;color:var(--gray)}
+.sort-select{padding:8px 32px 8px 12px;background:var(--dark3);border:1px solid var(--border2);color:var(--white);font-family:'Inter',sans-serif;font-size:12px;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.sort-select:focus{border-color:var(--gold)}
+.view-btns{display:flex;gap:4px}
+.view-btn{width:34px;height:34px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;background:none}
+.view-btn.active,.view-btn:hover{border-color:var(--gold)}
+.view-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;color:rgba(255,255,255,.5)}
+.view-btn.active svg{color:var(--gold)}
+
+/* PRODUCTS GRID */
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
+.products-grid.list-view{grid-template-columns:1fr}
+.pcard{cursor:pointer;position:relative}
+.pcard-img{position:relative;background:var(--dark2);aspect-ratio:3/4;overflow:hidden;margin-bottom:12px}
+.list-view .pcard{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start}
+.list-view .pcard-img{margin-bottom:0;aspect-ratio:1}
+.pcard-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:60px;opacity:.06;transition:transform .5s}
+.pcard:hover .pcard-inner{transform:scale(1.07)}
+.pbadge{position:absolute;top:10px;left:10px;padding:4px 10px;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;z-index:2}
+.b-new{background:var(--gold);color:var(--black)}
+.b-sale{background:#8B0000;color:#fff}
+.b-hit{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.pwish{position:absolute;top:10px;right:10px;width:32px;height:32px;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;cursor:pointer;border:none}
+.pcard:hover .pwish{opacity:1}
+.pwish svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:1.5}
+.pquick{position:absolute;bottom:0;left:0;right:0;padding:10px;background:rgba(0,0,0,.88);transform:translateY(100%);transition:transform .25s}
+.pcard:hover .pquick{transform:translateY(0)}
+.pquick-btn{width:100%;padding:10px;background:var(--gold);color:var(--black);border:none;font-family:'Inter',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+.pquick-btn:hover{background:var(--gold2)}
+.pstars{font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px}
+.pname{font-size:13px;margin-bottom:4px;line-height:1.3}
+.pmat{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
+.pprice-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.pprice{font-size:14px;font-weight:600;color:var(--gold)}
+.pold{font-size:12px;color:rgba(255,255,255,.28);text-decoration:line-through}
+.list-view .pcard-info{padding-top:8px}
+.list-view .pname{font-size:15px;margin-bottom:8px}
+.list-view .pmat{margin-bottom:12px}
+.list-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:16px;display:none}
+.list-view .list-desc{display:block}
+.add-cart-btn{padding:10px 24px;background:var(--gold);color:var(--black);border:none;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:none;transition:background .25s}
+.add-cart-btn:hover{background:var(--gold2)}
+.list-view .add-cart-btn{display:inline-block}
+
+/* PAGINATION */
+.pagination{display:flex;align-items:center;justify-content:center;gap:4px;padding:20px 0 40px}
+.pg-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border2);font-size:13px;cursor:pointer;transition:all .2s;background:none;color:rgba(255,255,255,.6)}
+.pg-btn:hover,.pg-btn.active{border-color:var(--gold);color:var(--gold)}
+.pg-btn.active{background:var(--gold);color:var(--black)}
+.pg-dots{color:var(--gray);padding:0 8px}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:80px 20px;display:none}
+.empty-icon{font-size:64px;margin-bottom:20px;opacity:.2}
+.empty-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;margin-bottom:12px}
+.empty-sub{font-size:13px;color:var(--gray)}
+
+/* BTN */
+.btn-gold{padding:12px 32px;background:var(--gold);color:var(--black);font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s}
+.btn-gold:hover{background:var(--gold2)}
+
+/* FOOTER */
+footer{background:var(--black);border-top:1px solid var(--border)}
+.foot-main{padding:48px 40px 32px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:5px;margin-bottom:12px}
+.f-logo span{color:var(--gold)}
+.f-desc{font-size:12px;line-height:1.8;color:rgba(255,255,255,.3);max-width:220px}
+.f-head{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:600}
+.f-links{display:flex;flex-direction:column;gap:9px}
+.f-lnk{font-size:12px;color:rgba(255,255,255,.38);cursor:pointer;transition:all .2s}
+.f-lnk:hover{color:var(--gold);padding-left:4px}
+.foot-bot{padding:16px 40px;border-top:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center}
+.f-copy{font-size:11px;color:rgba(255,255,255,.18)}
+.pay-icons{display:flex;gap:8px}
+.pay{padding:4px 10px;border:1px solid var(--border2);font-size:10px;color:rgba(255,255,255,.25);font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="tb-link">📍 Ереван</span>
+    <div class="tb-sep"></div>
+    <span class="tb-link">Магазины</span>
+    <span class="tb-link">Бонусная программа</span>
+  </div>
+  <div class="topbar-right">
+    <span class="tb-phone">8 800 100 00 00</span>
+    <div class="tb-sep"></div>
+    <span class="tb-link">RU</span>
+  </div>
+</div>
+<div class="promo-bar">✦ &nbsp;Бесплатная доставка от 5 000 ₽ &nbsp;✦ &nbsp;Возврат 14 дней &nbsp;✦ &nbsp;Гарантия качества &nbsp;✦</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-main">
+    <div class="logo" onclick="location.href='index.html'">A<span>.</span>RAM</div>
+    <div class="search-wrap">
+      <span class="search-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input class="search-input" type="text" placeholder="Поиск украшений...">
+    </div>
+    <div class="h-icons">
+      <button class="h-btn" onclick="location.href='account.html'">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Войти</span>
+      </button>
+      <button class="h-btn">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        <span>Избранное</span>
+      </button>
+      <button class="h-btn" onclick="location.href='cart.html'">
+        <div class="cart-badge" id="cartCount">3</div>
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Корзина</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-link" onclick="location.href='index.html'">Главная</span>
+    <span class="nav-link" style="color:var(--gold)">Украшения</span>
+    <span class="nav-link">Бижутерия</span>
+    <span class="nav-link">Коллекции</span>
+    <span class="nav-link">Новинки</span>
+    <span class="nav-link sale-link">Акции 🔥</span>
+    <span class="nav-link">Подарки</span>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <span class="bc-item" onclick="location.href='index.html'">Главная</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-current">Все украшения</span>
+</div>
+
+<!-- CATALOG -->
+<div class="catalog-wrap">
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <p class="filter-title">Фильтры</p>
+
+    <!-- PRICE -->
+    <div class="filter-group">
+      <div class="filter-group-title fg-open" onclick="toggleGroup(this)">
+        Цена, ₽
+        <svg class="fg-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="fg-body">
+        <div class="price-inputs">
+          <input class="price-inp" type="number" placeholder="От" value="5000" id="priceFrom">
+          <input class="price-inp" type="number" placeholder="До" value="200000" id="priceTo">
+        </div>
+        <input class="price-range" type="range" min="0" max="500000" value="200000">
+      </div>
+    </div>
+
+    <!-- METAL -->
+    <div class="filter-group">
+      <div class="filter-group-title fg-open" onclick="toggleGroup(this)">
+        Металл
+        <svg class="fg-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="fg-body">
+        <div class="color-swatches" style="margin-bottom:12px">
+          <div class="cswatch cswatch-yellow active" title="Золото жёлтое"></div>
+          <div class="cswatch cswatch-white" title="Золото белое"></div>
+          <div class="cswatch cswatch-rose" title="Золото розовое"></div>
+          <div class="cswatch cswatch-silver" title="Серебро"></div>
+          <div class="cswatch cswatch-combined" title="Комбинированное"></div>
+        </div>
+        <label class="filter-option"><input type="checkbox" checked><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Золото 585</span><span class="foption-count">380</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Золото 750</span><span class="foption-count">120</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Серебро 925</span><span class="foption-count">540</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Платина</span><span class="foption-count">45</span></label>
+      </div>
+    </div>
+
+    <!-- STONE -->
+    <div class="filter-group">
+      <div class="filter-group-title fg-open" onclick="toggleGroup(this)">
+        Камень
+        <svg class="fg-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="fg-body">
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Бриллиант</span><span class="foption-count">210</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Рубин</span><span class="foption-count">95</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Сапфир</span><span class="foption-count">78</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Изумруд</span><span class="foption-count">62</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Жемчуг</span><span class="foption-count">110</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Без камня</span><span class="foption-count">340</span></label>
+      </div>
+    </div>
+
+    <!-- SIZE -->
+    <div class="filter-group">
+      <div class="filter-group-title fg-open" onclick="toggleGroup(this)">
+        Размер кольца
+        <svg class="fg-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="fg-body">
+        <div class="size-grid">
+          <div class="size-btn" onclick="toggleSize(this)">15</div>
+          <div class="size-btn" onclick="toggleSize(this)">15.5</div>
+          <div class="size-btn active" onclick="toggleSize(this)">16</div>
+          <div class="size-btn" onclick="toggleSize(this)">16.5</div>
+          <div class="size-btn" onclick="toggleSize(this)">17</div>
+          <div class="size-btn" onclick="toggleSize(this)">17.5</div>
+          <div class="size-btn" onclick="toggleSize(this)">18</div>
+          <div class="size-btn" onclick="toggleSize(this)">18.5</div>
+          <div class="size-btn" onclick="toggleSize(this)">19</div>
+          <div class="size-btn" onclick="toggleSize(this)">19.5</div>
+          <div class="size-btn" onclick="toggleSize(this)">20</div>
+          <div class="size-btn" onclick="toggleSize(this)">21</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLLECTION -->
+    <div class="filter-group">
+      <div class="filter-group-title fg-open" onclick="toggleGroup(this)">
+        Коллекция
+        <svg class="fg-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="fg-body">
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Eternal Gold</span><span class="foption-count">38</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Crystal Nights</span><span class="foption-count">24</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Rose & Ruby</span><span class="foption-count">19</span></label>
+        <label class="filter-option"><input type="checkbox"><div class="fcheck"><div class="fcheck-inner"></div></div><span class="foption-label">Bijoux Premium</span><span class="foption-count">56</span></label>
+      </div>
+    </div>
+
+    <button class="filter-reset" onclick="resetFilters()">Сбросить все фильтры</button>
+  </div>
+
+  <!-- MAIN -->
+  <div class="catalog-main">
+    <!-- TOP BAR -->
+    <div class="catalog-top">
+      <div class="cat-top-left">
+        <p class="result-count">Найдено: <span id="resultCount">48</span> украшений</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <div class="sort-wrap">
+          <span class="sort-label">Сортировка:</span>
+          <select class="sort-select">
+            <option>По популярности</option>
+            <option>Сначала дешевле</option>
+            <option>Сначала дороже</option>
+            <option>Новинки</option>
+            <option>По скидке</option>
+          </select>
+        </div>
+        <div class="view-btns">
+          <button class="view-btn active" id="gridBtn" onclick="setView('grid')">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          </button>
+          <button class="view-btn" id="listBtn" onclick="setView('list')">
+            <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVE FILTERS -->
+    <div class="active-filters">
+      <div class="af-tag">Золото 585 <span class="af-remove" onclick="this.parentElement.remove()">×</span></div>
+      <div class="af-tag">Размер: 16 <span class="af-remove" onclick="this.parentElement.remove()">×</span></div>
+      <div class="af-tag">до 200 000 ₽ <span class="af-remove" onclick="this.parentElement.remove()">×</span></div>
+      <button class="af-clear" onclick="document.querySelector('.active-filters').innerHTML=''">Сбросить всё</button>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="products-grid" id="productsGrid">
+      <div class="pcard" onclick="location.href='product.html'">
+        <div class="pcard-img"><span class="pbadge b-new">Новинка</span><div class="pcard-inner">💍</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addCart(event)">В корзину</button></div></div>
+        <div class="pcard-info"><div class="pstars">★★★★★ <span style="color:var(--gray);font-size:10px">(24)</span></div><p class="pname">Кольцо «Аврора»</p><p class="pmat">Золото 585 · Бриллиант</p><div class="pprice-row"><span class="pprice">48 900 ₽</span></div><p class="list-desc">Изящное кольцо из золота 585 пробы с натуральным бриллиантом 0.15 карата. Покрытие родием для защиты от царапин.</p><button class="add-cart-btn" onclick="addCart(event)">В корзину</button></div>
+      </div>
+      <div class="pcard" onclick="location.href='product.html'">
+        <div class="pcard-img"><span class="pbadge b-hit">Хит</span><div class="pcard-inner">✨</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addCart(event)">В корзину</button></div></div>
+        <div class="pcard-info"><div class="pstars">★★★★★ <span style="color:var(--gray);font-size:10px">(18)</span></div><p class="pname">Серьги «Луна»</p><p class="pmat">Золото 585 · Рубин</p><div class="pprice-row"><span class="pprice">31 600 ₽</span><span class="pold">39 500 ₽</span></div><p class="list-desc">Серьги-пусеты из золота 585 пробы с натуральными рубинами. Вес изделия: 3.2 г. Размер камня: 4мм.</p><button class="add-cart-btn" onclick="addCart(event)">В корзину</button></div>
+      </div>
+      <div class="pcard" onclick="location.href='product.html'">
+        <div class="pcard-img"><span class="pbadge b-sale">−20%</span><div class="pcard-inner">📿</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addCart(event)">В корзину</button></div></div>
+        <div class="pcard-info"><div class="pstars">★★★★☆ <span style="color:var(--gray);font-size:10px">(31)</span></div><p class="pname">Колье «Созвездие»</p><p class="pmat">Серебро 925 · Жемчуг</p><div class="pprice-row"><span class="pprice">22 400 ₽</span><span class="pold">28 000 ₽</span></div><p class="list-desc">Элегантное колье из серебра 925 пробы с морским жемчугом. Длина цепочки: 45 см.</p><button class="add-cart-btn" onclick="addCart(event)">В корзину</button></div>
+      </div>
+      <div class="pcard" onclick="location.href='product.html'">
+        <div class="pcard-img"><div class="pcard-inner">🪢</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addCart(event)">В корзину</button></div></div>
+        <div class="pcard-info"><div class="pstars">★★★★★ <span style="color:var(--gray);font-size:10px">(12)</span></div><p class="pname">Браслет «Вечность»</p><p class="pmat">Золото 585 · Сапфир</p><div class="pprice-row"><span class="pprice">67 200 ₽</span></div><p class="list-desc">Браслет из золота 585 пробы с натуральными сапфирами. Длина: 18 см с застёжкой-карабином.</p><button class="add-cart-btn" onclick="addCart(event)">В корзину</button></div>
+      </div>
+      <div class="pcard" onclick="location.href='product.html'">
+        <div class="pcard-img"><span class="pbadge b-new">Новинка</span><div class="pcard-inner">🔮</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addCart(event)">В корзину</button></div></div>
+        <div class="pcard-info"><div class="pstars">★★★★★ <span style="color:var(--gray);font-size:10px">(8)</span></div><p class="pname">Подвеска «Капля»</p><p class="pmat">Золото 585 · Изумруд</p><div class="pprice-row"><span class="pprice">28 500 ₽</span></div><p class="list-desc">Подвеска из золота 585 пробы с натуральным изумрудом каплевидной формы.</p><button class="add-cart-btn" onclick="addCart(event)">В корзину</button></div>
+      </div>
+      <div class="pcard" onclick="location.href='product.html'">
+        <div class="pcard-img"><span class="pbadge b-sale">−15%</span><div class="pcard-inner">💍</div><button class="pwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><div class="pquick"><button class="pquick-btn" onclick="addCart(event)">В корзину</button></div></div>
+        <div class="pcard-info"><div class="pstars">★★★★☆ <span style="color:var(--gray);font-size:10px">(19)</span></div><p class="pname">Кольцо «Звезда»</p><p class="pmat">Золото 585 · Бриллиант</p><div class="pprice-row"><span class="pprice">55 200 ₽</span><span class="pold">65 000 ₽</span></div><p class="list-desc">Кольцо-звезда из белого золота 585 пробы с россыпью бриллиантов.</p><button class="add-cart-btn" onclick="addCart(event)">В корзину</button></div>
+      </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <button class="pg-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="pg-btn active">1</button>
+      <button class="pg-btn">2</button>
+      <button class="pg-btn">3</button>
+      <span class="pg-dots">...</span>
+      <button class="pg-btn">8</button>
+      <button class="pg-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-main">
+    <div>
+      <div class="f-logo">A<span>.</span>RAM</div>
+      <p class="f-desc">Авторские ювелирные украшения премиального качества.</p>
+    </div>
+    <div><p class="f-head">Каталог</p><div class="f-links"><a class="f-lnk">Кольца</a><a class="f-lnk">Серьги</a><a class="f-lnk">Колье</a><a class="f-lnk">Браслеты</a></div></div>
+    <div><p class="f-head">Компания</p><div class="f-links"><a class="f-lnk">О бренде</a><a class="f-lnk">Журнал</a><a class="f-lnk">Вакансии</a></div></div>
+    <div><p class="f-head">Помощь</p><div class="f-links"><a class="f-lnk">Доставка</a><a class="f-lnk">Возврат</a><a class="f-lnk">Контакты</a></div></div>
+  </div>
+  <div class="foot-bot">
+    <p class="f-copy">© 2025 A.RAM Ювелирные изделия</p>
+    <div class="pay-icons"><div class="pay">VISA</div><div class="pay">MC</div><div class="pay">МИР</div></div>
+  </div>
+</footer>
+
+<script>
+function toggleGroup(el){el.classList.toggle('fg-open');const body=el.nextElementSibling;body.style.display=el.classList.contains('fg-open')?'block':'none'}
+function toggleSize(el){el.classList.toggle('active')}
+function setView(v){
+  const grid=document.getElementById('productsGrid');
+  const gb=document.getElementById('gridBtn');
+  const lb=document.getElementById('listBtn');
+  if(v==='list'){grid.classList.add('list-view');lb.classList.add('active');gb.classList.remove('active')}
+  else{grid.classList.remove('list-view');gb.classList.add('active');lb.classList.remove('active')}
+}
+function addCart(e){
+  e.stopPropagation();
+  const b=document.getElementById('cartCount');
+  b.textContent=parseInt(b.textContent)+1;
+  b.style.transform='scale(1.5)';
+  setTimeout(()=>b.style.transform='scale(1)',300);
+}
+function resetFilters(){
+  document.querySelectorAll('.filter-option input').forEach(i=>i.checked=false);
+  document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.cswatch').forEach(s=>s.classList.remove('active'));
+  document.querySelector('.active-filters').innerHTML='';
+}
+document.querySelectorAll('.cswatch').forEach(s=>{s.addEventListener('click',function(){this.classList.toggle('active')})});
+document.querySelectorAll('.pg-btn').forEach(b=>{b.addEventListener('click',function(){document.querySelectorAll('.pg-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active')})});
+</script>
+</body>
+</html>
