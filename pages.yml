@@ -1,0 +1,159 @@
+media:
+  input: media
+  output: /media
+
+content:
+  - name: products
+    label: Товары
+    path: content/products
+    type: collection
+    view:
+      fields: [name, price, category, metal]
+    fields:
+      - name: name
+        label: Название товара
+        type: string
+        required: true
+      - name: category
+        label: Категория
+        type: select
+        options:
+          - { label: Кольца, value: rings }
+          - { label: Серьги, value: earrings }
+          - { label: Колье, value: necklaces }
+          - { label: Браслеты, value: bracelets }
+          - { label: Подвески, value: pendants }
+          - { label: Броши, value: brooches }
+          - { label: Бижутерия, value: bijoux }
+        required: true
+      - name: price
+        label: Цена (₽)
+        type: number
+        required: true
+      - name: old_price
+        label: Старая цена (₽)
+        type: number
+      - name: metal
+        label: Металл
+        type: select
+        options:
+          - { label: Золото 585, value: gold585 }
+          - { label: Золото 750, value: gold750 }
+          - { label: Серебро 925, value: silver925 }
+          - { label: Платина, value: platinum }
+          - { label: Комбинированное, value: combined }
+      - name: stone
+        label: Камень
+        type: select
+        options:
+          - { label: Бриллиант, value: diamond }
+          - { label: Рубин, value: ruby }
+          - { label: Сапфир, value: sapphire }
+          - { label: Изумруд, value: emerald }
+          - { label: Жемчуг, value: pearl }
+          - { label: Без камня, value: none }
+      - name: collection
+        label: Коллекция
+        type: select
+        options:
+          - { label: Eternal Gold, value: eternal_gold }
+          - { label: Crystal Nights, value: crystal_nights }
+          - { label: Rose & Ruby, value: rose_ruby }
+          - { label: Bijoux Premium, value: bijoux_premium }
+      - name: badge
+        label: Значок
+        type: select
+        options:
+          - { label: Нет, value: none }
+          - { label: Новинка, value: new }
+          - { label: Хит, value: hit }
+          - { label: Распродажа, value: sale }
+      - name: description
+        label: Описание
+        type: rich-text
+      - name: weight
+        label: Вес изделия (г)
+        type: number
+      - name: sizes
+        label: Доступные размеры
+        type: string
+      - name: image
+        label: Фото товара
+        type: image
+      - name: images
+        label: Дополнительные фото
+        type: image
+        list: true
+      - name: in_stock
+        label: В наличии
+        type: boolean
+        default: true
+
+  - name: collections
+    label: Коллекции
+    path: content/collections
+    type: collection
+    fields:
+      - name: name
+        label: Название коллекции
+        type: string
+        required: true
+      - name: description
+        label: Описание
+        type: text
+      - name: image
+        label: Фото коллекции
+        type: image
+      - name: tag
+        label: Тег (напр. Новинка)
+        type: string
+      - name: items_count
+        label: Количество товаров
+        type: number
+
+  - name: slider
+    label: Слайдер на главной
+    path: content/slider
+    type: collection
+    fields:
+      - name: title
+        label: Заголовок
+        type: string
+        required: true
+      - name: subtitle
+        label: Подзаголовок
+        type: string
+      - name: description
+        label: Описание
+        type: text
+      - name: button_text
+        label: Текст кнопки
+        type: string
+      - name: tag
+        label: Тег (напр. Новая коллекция)
+        type: string
+      - name: image
+        label: Фоновое изображение
+        type: image
+
+  - name: settings
+    label: Настройки сайта
+    path: content
+    type: file
+    filename: settings.json
+    fields:
+      - name: phone
+        label: Телефон
+        type: string
+      - name: email
+        label: Email
+        type: string
+      - name: address
+        label: Адрес
+        type: string
+      - name: promo_text
+        label: Текст промо-полоски
+        type: string
+      - name: free_delivery_from
+        label: Бесплатная доставка от (₽)
+        type: number
